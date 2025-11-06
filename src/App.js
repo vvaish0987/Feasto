@@ -6,6 +6,8 @@ import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import Navbar from './components/Navbar';
 import Inventory from './pages/Inventory';
+import Food from './pages/Food';
+import Grocery from './pages/Grocery';
 import CartPage from './pages/Cart';
 import Checkout from './pages/Checkout';
 import Orders from './pages/Orders';
@@ -23,6 +25,8 @@ function App() {
               <Routes>
                 <Route path="/" element={<Inventory />} />
                 <Route path="/cart" element={<CartPage />} />
+                <Route path="/food" element={<Food />} />
+                <Route path="/grocery" element={<Grocery />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/orders" element={<Orders />} />
                 <Route path="/profile" element={<Profile />} />

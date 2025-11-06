@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { createUserProfile, getUserProfileByUid, getUserProfileByEmail } from '../services/usersService';
 import { db } from '../firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 
@@ -19,7 +20,6 @@ export default function Profile(){
         // try fetch via usersService (uid-first)
         let data = null;
         try{
-          const { getUserProfileByUid, getUserProfileByEmail } = await import('../services/usersService');
           if(user.uid) data = await getUserProfileByUid(user.uid);
           if(!data && user.email) data = await getUserProfileByEmail(user.email);
         }catch(e){
@@ -50,6 +50,21 @@ export default function Profile(){
     setSaving(false);
   }
 
+  async function ensureProfile(){
+    if(!user?.email) return setFetchError('Please login');
+    setLoading(true); setFetchError('');
+    try{
+      const existing = await getUserProfileByUid(user.uid);
+      if(existing){ setProfile(existing); setFetchError('Profile already exists'); }
+      else{
+        const created = await createUserProfile(user.email, user.uid, { name: profile.name, phone: profile.phone });
+        setProfile(created);
+        setFetchError('Profile created');
+      }
+    }catch(e){ setFetchError('Failed to create profile: ' + (e.message || e)); }
+    setLoading(false);
+  }
+
   if(!user) return <div style={{maxWidth:700, margin:'12px auto'}}><div className="card">Please <a href="/auth">login</a> to view your profile.</div></div>;
 
   return (
@@ -70,7 +85,13 @@ export default function Profile(){
             </div>
           </div>
         )}
-        {fetchError && <div style={{color:'crimson', marginTop:8}}>{fetchError}</div>}
+        {fetchError && (
+          <div style={{marginTop:8}}>
+            <div style={{color:'crimson'}}>{fetchError}</div>
+            <div style={{height:8}} />
+            <button className="btn" onClick={ensureProfile}>Ensure profile</button>
+          </div>
+        )}
       </div>
     </div>
   );
