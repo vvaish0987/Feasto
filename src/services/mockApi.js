@@ -64,16 +64,17 @@ export async function getItems(category='All'){
 // Check availability without mutating. returns { ok: bool, missing: [{id, requested, available}] }
 export async function checkAvailability(cartItems){
   try{
-    // use Firestore reads
+    // use Firestore reads; support item.source to pick collection
     const missing = [];
     for(const c of cartItems){
-      const snap = await getDoc(doc(db, 'inventory', c.id));
+      const collectionName = c.source || 'inventory';
+      const snap = await getDoc(doc(db, collectionName, c.id));
       const available = snap.exists() ? snap.data().stock : 0;
       if(!snap.exists() || c.qty > available) missing.push({ id: c.id, name: snap.exists()? snap.data().name : 'Unknown', requested: c.qty, available });
     }
     return { ok: missing.length===0, missing };
   }catch(e){
-    // fallback to local check
+    // fallback to local check (try seed arrays)
     const inv = loadInventoryLocal();
     const missing = [];
     for(const c of cartItems){
@@ -88,21 +89,22 @@ export async function checkAvailability(cartItems){
 // Commit order: checks availability and deducts only on success. Returns { success, order, missing }
 export async function placeOrderForUser(uid, email, cartItems){
   try{
-    // use a transaction to ensure atomicity
+    // order envelope
     const order = {
       id: 'ORD_' + Math.random().toString(36).slice(2,9).toUpperCase(),
       date: new Date().toISOString(),
-      items: cartItems.map(i=> ({ id:i.id, name:i.name, price:i.price, qty:i.qty })),
+      items: cartItems.map(i=> ({ id:i.id, name:i.name, price:i.price, qty:i.qty, source: i.source || 'inventory' })),
       total: cartItems.reduce((s,i)=> s + i.price*i.qty, 0),
       delivered: false
     };
 
     await runTransaction(db, async (t)=>{
-      // check each inventory doc
+      // check and decrement per-item collection
       for(const c of cartItems){
-        const ref = doc(db, 'inventory', c.id);
+        const collectionName = c.source || 'inventory';
+        const ref = doc(db, collectionName, c.id);
         const snap = await t.get(ref);
-        if(!snap.exists()) throw new Error(`Item ${c.id} not found`);
+        if(!snap.exists()) throw new Error(`Item ${c.id} not found in ${collectionName}`);
         const available = snap.data().stock;
         if(c.qty > available) throw new Error(`Insufficient stock for ${c.id}`);
         t.update(ref, { stock: available - c.qty });
@@ -114,7 +116,6 @@ export async function placeOrderForUser(uid, email, cartItems){
 
     return { success:true, order };
   }catch(e){
-    // if transaction failed, return missing info where possible via checkAvailability
     const check = await checkAvailability(cartItems);
     return { success:false, missing: check.missing, message: e.message };
   }

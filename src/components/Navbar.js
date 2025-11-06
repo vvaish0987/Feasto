@@ -4,11 +4,13 @@ import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 
 export default function Navbar(){
-  const { items } = useCart();
+  const { food, grocery } = useCart();
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
-  const qty = items.reduce((s,i)=> s+i.qty,0);
+  const qtyFood = (food || []).reduce((s,i)=> s + (i.qty||0), 0);
+  const qtyGrocery = (grocery || []).reduce((s,i)=> s + (i.qty||0), 0);
+  const qty = qtyFood + qtyGrocery;
 
   return (
     <header style={{background:'white', borderBottom:'1px solid #eee'}}>
@@ -19,7 +21,9 @@ export default function Navbar(){
         </Link>
 
         <nav style={{marginLeft:10}}>
-          <Link to="/" style={{marginRight:12, color:'#333'}}>Browse</Link>
+          <Link to="/" style={{marginRight:12, color:'#333'}}>Home</Link>
+          <Link to="/food" style={{marginRight:12, color:'#333'}}>Food</Link>
+          <Link to="/grocery" style={{marginRight:12, color:'#333'}}>Grocery</Link>
           <Link to="/orders" style={{marginRight:12, color:'#333'}}>Orders</Link>
           <Link to="/profile" style={{marginRight:12, color:'#333'}}>Profile</Link>
         </nav>
@@ -27,9 +31,12 @@ export default function Navbar(){
         <div style={{flex:1}} />
 
         <div style={{display:'flex', gap:8, alignItems:'center'}}>
-          <Link to="/cart" className="btn" style={{display:'inline-flex', alignItems:'center', gap:8}}>
-            Cart ({qty})
-          </Link>
+          <div style={{display:'flex', gap:8}}>
+            <Link to="/cart" className="btn" style={{display:'inline-flex', alignItems:'center', gap:8}}>Cart ({qty})</Link>
+            <div style={{padding:'6px 8px', background:'#fff7f0', borderRadius:6, border:'1px solid #ffd8c2'}}>
+              <small style={{fontSize:12}}>F: {qtyFood} • G: {qtyGrocery}</small>
+            </div>
+          </div>
           {user ? (
             <>
               <Link to="/profile" style={{marginRight:8}} className="muted">{user.email}</Link>
