@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import catalog from '../services/catalogService';
 import HorizontalScroller from '../components/HorizontalScroller';
+import SearchBar from '../components/SearchBar';
+import { useCart } from '../context/CartContext';
 
 export default function Inventory(){
   const [foodFeatured, setFoodFeatured] = useState([]);
   const [grocFeatured, setGrocFeatured] = useState([]);
   const [selected, setSelected] = useState(null); // 'food' | 'grocery' | null
   const navigate = useNavigate();
+  const { addItem } = useCart();
 
   useEffect(()=>{
     (async ()=>{
@@ -81,6 +84,7 @@ export default function Inventory(){
   return (
     <div style={{maxWidth:1100, margin:'0 auto'}}>
       <h2>Explore Feasto</h2>
+  <SearchBar onAdd={(it)=> addItem && addItem(it,1,it.source||'food')} onBuyNow={(it)=> navigate((it.source==='grocery'? '/grocery':'/food'))} />
 
       {/* Two large neutral cards as the main entry */}
       {!selected && renderSelector()}
