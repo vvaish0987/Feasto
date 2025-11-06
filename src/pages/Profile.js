@@ -5,7 +5,7 @@ import { db, app } from '../firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 export default function Profile(){
-  const { user } = useAuth();
+  const { user, refreshProfile } = useAuth();
   const [profile, setProfile] = useState({ name:'', email:'', phone:'' });
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -46,6 +46,10 @@ export default function Profile(){
       await setDoc(doc(db, 'users', user.email), profileToSave, { merge:true });
       if(user.uid) await setDoc(doc(db, 'users_uid', user.uid), profileToSave, { merge:true });
       setMsg('Profile saved');
+      // refresh auth context so header (and other consumers) pick up the new name immediately
+      if(typeof refreshProfile === 'function'){
+        try{ await refreshProfile(); }catch(e){ console.warn('refreshProfile after save failed', e); }
+      }
     }catch(e){ setMsg(e.message || 'Failed to save'); }
     setSaving(false);
   }
