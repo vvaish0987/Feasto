@@ -123,6 +123,27 @@ export default function ItemCard({ item, onAdd, onBuyNow, type='food' }){
         }} />
       )}
 
+      {/* Offer Badge */}
+      {item.offer && item.offer.hasOffer && (
+        <div style={{
+          position: 'absolute',
+          top: 15,
+          right: item.stock !== undefined ? '100px' : '15px',
+          background: 'linear-gradient(135deg, #e74c3c, #c0392b)',
+          color: '#fff',
+          padding: '0.4rem 0.8rem',
+          borderRadius: 20,
+          fontSize: '0.8rem',
+          fontWeight: 700,
+          backdropFilter: 'blur(10px)',
+          boxShadow: '0 4px 15px rgba(231, 76, 60, 0.4)',
+          animation: 'pulse 2s infinite',
+          zIndex: 5
+        }}>
+          🎉 {item.offer.offerText}
+        </div>
+      )}
+
       {/* Stock Badge */}
       {item.stock !== undefined && (
         <div style={stockBadgeStyle}>
@@ -203,7 +224,45 @@ export default function ItemCard({ item, onAdd, onBuyNow, type='food' }){
 
         <div style={{flex: 1}}>
           <div style={nameStyle}>{item.name}</div>
-          <div style={priceStyle}>₹{item.price}</div>
+          
+          {/* Price Display with Offers */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '0.5rem' }}>
+            {item.offer && item.offer.hasOffer && item.offer.discountedPrice !== item.price ? (
+              <>
+                <div style={{
+                  fontSize: '1.4rem',
+                  fontWeight: 800,
+                  color: 'var(--primary-color)',
+                  fontFamily: 'Montserrat, sans-serif'
+                }}>
+                  ₹{item.offer.discountedPrice}
+                </div>
+                <div style={{
+                  fontSize: '1rem',
+                  fontWeight: 500,
+                  color: 'rgba(13, 13, 13, 0.5)',
+                  textDecoration: 'line-through',
+                  fontFamily: 'Montserrat, sans-serif'
+                }}>
+                  ₹{item.offer.originalPrice}
+                </div>
+                {item.offer.discountType === 'percentage' && (
+                  <div style={{
+                    background: 'linear-gradient(135deg, #27ae60, #2ecc71)',
+                    color: 'white',
+                    padding: '2px 8px',
+                    borderRadius: '8px',
+                    fontSize: '0.75rem',
+                    fontWeight: 600
+                  }}>
+                    -{item.offer.discountValue}%
+                  </div>
+                )}
+              </>
+            ) : (
+              <div style={priceStyle}>₹{item.price}</div>
+            )}
+          </div>
           <div style={metaStyle}>
             <span style={{
               background: 'var(--primary-color)',

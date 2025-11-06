@@ -14,9 +14,11 @@ import CartPage from './pages/Cart';
 import Checkout from './pages/Checkout';
 import Orders from './pages/Orders';
 import Profile from './pages/Profile';
+import TestProfile from './pages/TestProfile';
 import AuthPage from './pages/AuthPage';
 import SeedData from './pages/SeedData';
 import UpdateVegField from './pages/UpdateVegField';
+import UpdateOffersField from './pages/UpdateOffersField';
 
 function App() {
   return (
@@ -34,9 +36,11 @@ function App() {
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/orders" element={<Orders />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/test-profile" element={<TestProfile />} />
                 <Route path="/auth" element={<AuthPage />} />
                 <Route path="/seed" element={<SeedData />} />
                 <Route path="/update-veg" element={<UpdateVegField />} />
+                <Route path="/update-offers" element={<UpdateOffersField />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </main>

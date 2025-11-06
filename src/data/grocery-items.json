@@ -12,7 +12,15 @@
     "unit": "1 dozen (12 pieces)",
     "nutritionInfo": "High in Potassium, Vitamin B6, Vitamin C",
     "source": "grocery",
-    "isVeg": true
+    "isVeg": true,
+    "offer": {
+      "hasOffer": false,
+      "offerText": null,
+      "discountType": null,
+      "discountValue": 0,
+      "originalPrice": 80,
+      "discountedPrice": 80
+    }
   },
   "g2": {
     "id": "g2",
@@ -27,7 +35,15 @@
     "unit": "1 kg pack",
     "nutritionInfo": "High Fiber, Whole Grain, Rich in B Vitamins",
     "source": "grocery",
-    "isVeg": true
+    "isVeg": true,
+    "offer": {
+      "hasOffer": false,
+      "offerText": null,
+      "discountType": null,
+      "discountValue": 0,
+      "originalPrice": 120,
+      "discountedPrice": 120
+    }
   },
   "g3": {
     "id": "g3",
@@ -42,7 +58,15 @@
     "unit": "500ml bottle",
     "nutritionInfo": "Rich in Monounsaturated Fats, Vitamin E, Antioxidants",
     "source": "grocery",
-    "isVeg": true
+    "isVeg": true,
+    "offer": {
+      "hasOffer": true,
+      "offerText": "25% OFF",
+      "discountType": "percentage",
+      "discountValue": 25,
+      "originalPrice": 349,
+      "discountedPrice": 262
+    }
   },
   "g4": {
     "id": "g4",
@@ -57,7 +81,15 @@
     "unit": "400g loaf",
     "nutritionInfo": "High Fiber, Multiple Grains, No Preservatives",
     "source": "grocery",
-    "isVeg": true
+    "isVeg": true,
+    "offer": {
+      "hasOffer": true,
+      "offerText": "New Item Special",
+      "discountType": "new_item",
+      "discountValue": 0,
+      "originalPrice": 65,
+      "discountedPrice": 65
+    }
   },
   "g5": {
     "id": "g5",
@@ -72,7 +104,15 @@
     "unit": "250g pack",
     "nutritionInfo": "High Protein, Vitamin E, Magnesium, Healthy Fats",
     "source": "grocery",
-    "isVeg": true
+    "isVeg": true,
+    "offer": {
+      "hasOffer": true,
+      "offerText": "30% OFF",
+      "discountType": "percentage",
+      "discountValue": 30,
+      "originalPrice": 299,
+      "discountedPrice": 209
+    }
   },
   "g6": {
     "id": "g6",
@@ -87,7 +127,15 @@
     "unit": "1 liter carton",
     "nutritionInfo": "High Calcium, Protein, Vitamin D, Riboflavin",
     "source": "grocery",
-    "isVeg": true
+    "isVeg": true,
+    "offer": {
+      "hasOffer": true,
+      "offerText": "15% OFF",
+      "discountType": "percentage",
+      "discountValue": 15,
+      "originalPrice": 55,
+      "discountedPrice": 47
+    }
   },
   "g7": {
     "id": "g7",
@@ -102,7 +150,15 @@
     "unit": "6 pieces tray",
     "nutritionInfo": "High Protein, Vitamin B12, Choline, Selenium",
     "source": "grocery",
-    "isVeg": true
+    "isVeg": true,
+    "offer": {
+      "hasOffer": false,
+      "offerText": null,
+      "discountType": null,
+      "discountValue": 0,
+      "originalPrice": 60,
+      "discountedPrice": 60
+    }
   },
   "g8": {
     "id": "g8",
@@ -117,7 +173,15 @@
     "unit": "1 kg pack",
     "nutritionInfo": "Rich in Lycopene, Vitamin C, Potassium, Folate",
     "source": "grocery",
-    "isVeg": true
+    "isVeg": true,
+    "offer": {
+      "hasOffer": false,
+      "offerText": null,
+      "discountType": null,
+      "discountValue": 0,
+      "originalPrice": 45,
+      "discountedPrice": 45
+    }
   },
   "g9": {
     "id": "g9",
@@ -132,7 +196,15 @@
     "unit": "1 kg pack",
     "nutritionInfo": "High in Potassium, Vitamin C, Fiber, B6",
     "source": "grocery",
-    "isVeg": true
+    "isVeg": true,
+    "offer": {
+      "hasOffer": false,
+      "offerText": null,
+      "discountType": null,
+      "discountValue": 0,
+      "originalPrice": 35,
+      "discountedPrice": 35
+    }
   },
   "g10": {
     "id": "g10",
@@ -147,7 +219,15 @@
     "unit": "1 kg pack",
     "nutritionInfo": "Rich in Antioxidants, Vitamin C, Quercetin",
     "source": "grocery",
-    "isVeg": true
+    "isVeg": true,
+    "offer": {
+      "hasOffer": true,
+      "offerText": "Chef's Special",
+      "discountType": "special",
+      "discountValue": 0,
+      "originalPrice": 30,
+      "discountedPrice": 30
+    }
   },
   "g11": {
     "id": "g11",
@@ -162,7 +242,15 @@
     "unit": "100g container",
     "nutritionInfo": "Rich in Iron, Manganese, Anti-inflammatory compounds",
     "source": "grocery",
-    "isVeg": true
+    "isVeg": true,
+    "offer": {
+      "hasOffer": false,
+      "offerText": null,
+      "discountType": null,
+      "discountValue": 0,
+      "originalPrice": 55,
+      "discountedPrice": 55
+    }
   },
   "g12": {
     "id": "g12",
@@ -177,7 +265,15 @@
     "unit": "100g container",
     "nutritionInfo": "High Curcumin, Anti-inflammatory, Antioxidants",
     "source": "grocery",
-    "isVeg": true
+    "isVeg": true,
+    "offer": {
+      "hasOffer": true,
+      "offerText": "Flavor Boost",
+      "discountType": "special",
+      "discountValue": 0,
+      "originalPrice": 45,
+      "discountedPrice": 45
+    }
   },
   "g13": {
     "id": "g13",
@@ -192,7 +288,15 @@
     "unit": "1 kg pack",
     "nutritionInfo": "Pure Sucrose, Quick Energy Source",
     "source": "grocery",
-    "isVeg": true
+    "isVeg": true,
+    "offer": {
+      "hasOffer": true,
+      "offerText": "Buy 1 Get 1 FREE",
+      "discountType": "bogo",
+      "discountValue": 0,
+      "originalPrice": 48,
+      "discountedPrice": 48
+    }
   },
   "g14": {
     "id": "g14",
@@ -207,7 +311,15 @@
     "unit": "1 kg pack",
     "nutritionInfo": "Enriched with Iron, B Vitamins, Folic Acid",
     "source": "grocery",
-    "isVeg": true
+    "isVeg": true,
+    "offer": {
+      "hasOffer": true,
+      "offerText": "15% OFF",
+      "discountType": "percentage",
+      "discountValue": 15,
+      "originalPrice": 60,
+      "discountedPrice": 51
+    }
   },
   "g15": {
     "id": "g15",
@@ -222,7 +334,15 @@
     "unit": "350g jar",
     "nutritionInfo": "High Protein, Healthy Fats, Vitamin E, Niacin",
     "source": "grocery",
-    "isVeg": true
+    "isVeg": true,
+    "offer": {
+      "hasOffer": false,
+      "offerText": null,
+      "discountType": null,
+      "discountValue": 0,
+      "originalPrice": 199,
+      "discountedPrice": 199
+    }
   },
   "g16": {
     "id": "g16",
@@ -237,7 +357,15 @@
     "unit": "500g pack",
     "nutritionInfo": "High Carbohydrates, Protein, B Vitamins, Iron",
     "source": "grocery",
-    "isVeg": true
+    "isVeg": true,
+    "offer": {
+      "hasOffer": true,
+      "offerText": "Free Delivery",
+      "discountType": "free_delivery",
+      "discountValue": 0,
+      "originalPrice": 89,
+      "discountedPrice": 89
+    }
   },
   "g17": {
     "id": "g17",
@@ -252,7 +380,15 @@
     "unit": "25 tea bags",
     "nutritionInfo": "Rich in Antioxidants, EGCG, Low Caffeine",
     "source": "grocery",
-    "isVeg": true
+    "isVeg": true,
+    "offer": {
+      "hasOffer": false,
+      "offerText": null,
+      "discountType": null,
+      "discountValue": 0,
+      "originalPrice": 149,
+      "discountedPrice": 149
+    }
   },
   "g18": {
     "id": "g18",
@@ -267,7 +403,15 @@
     "unit": "500ml bottle",
     "nutritionInfo": "Biodegradable, Tough on Grease, Gentle on Hands",
     "source": "grocery",
-    "isVeg": true
+    "isVeg": true,
+    "offer": {
+      "hasOffer": true,
+      "offerText": "10% OFF",
+      "discountType": "percentage",
+      "discountValue": 10,
+      "originalPrice": 199,
+      "discountedPrice": 179
+    }
   },
   "g19": {
     "id": "g19",
@@ -282,7 +426,15 @@
     "unit": "500ml bottle",
     "nutritionInfo": "Kills 99.9% Germs, Fresh Fragrance, Deep Clean",
     "source": "grocery",
-    "isVeg": true
+    "isVeg": true,
+    "offer": {
+      "hasOffer": true,
+      "offerText": "20% OFF",
+      "discountType": "percentage",
+      "discountValue": 20,
+      "originalPrice": 129,
+      "discountedPrice": 103
+    }
   },
   "g20": {
     "id": "g20",
@@ -297,7 +449,15 @@
     "unit": "500g pack",
     "nutritionInfo": "High Fiber, Protein, Vitamin K, Vitamin C",
     "source": "grocery",
-    "isVeg": true
+    "isVeg": true,
+    "offer": {
+      "hasOffer": true,
+      "offerText": "10% OFF",
+      "discountType": "percentage",
+      "discountValue": 10,
+      "originalPrice": 99,
+      "discountedPrice": 89
+    }
   },
   "g21": {
     "id": "g21",
@@ -312,7 +472,15 @@
     "unit": "500g container",
     "nutritionInfo": "High Protein, Probiotics, Calcium, Low Sugar",
     "source": "grocery",
-    "isVeg": true
+    "isVeg": true,
+    "offer": {
+      "hasOffer": false,
+      "offerText": null,
+      "discountType": null,
+      "discountValue": 0,
+      "originalPrice": 149,
+      "discountedPrice": 149
+    }
   },
   "g22": {
     "id": "g22",
@@ -327,7 +495,15 @@
     "unit": "1 kg pack",
     "nutritionInfo": "Low Glycemic Index, Aromatic, Long Grain",
     "source": "grocery",
-    "isVeg": true
+    "isVeg": true,
+    "offer": {
+      "hasOffer": true,
+      "offerText": "Chef's Special",
+      "discountType": "special",
+      "discountValue": 0,
+      "originalPrice": 189,
+      "discountedPrice": 189
+    }
   },
   "g23": {
     "id": "g23",
@@ -342,7 +518,15 @@
     "unit": "500g jar",
     "nutritionInfo": "Natural Antioxidants, Enzymes, Antibacterial Properties",
     "source": "grocery",
-    "isVeg": true
+    "isVeg": true,
+    "offer": {
+      "hasOffer": true,
+      "offerText": "25% OFF",
+      "discountType": "percentage",
+      "discountValue": 25,
+      "originalPrice": 299,
+      "discountedPrice": 224
+    }
   },
   "g24": {
     "id": "g24",
@@ -357,7 +541,15 @@
     "unit": "1 kg pack",
     "nutritionInfo": "Mixed Vitamins, Fiber, Minerals, No Preservatives",
     "source": "grocery",
-    "isVeg": true
+    "isVeg": true,
+    "offer": {
+      "hasOffer": true,
+      "offerText": "25% OFF",
+      "discountType": "percentage",
+      "discountValue": 25,
+      "originalPrice": 149,
+      "discountedPrice": 112
+    }
   },
   "g25": {
     "id": "g25",
@@ -372,7 +564,15 @@
     "unit": "500ml bottle",
     "nutritionInfo": "Medium Chain Fatty Acids, Lauric Acid, Vitamin E",
     "source": "grocery",
-    "isVeg": true
+    "isVeg": true,
+    "offer": {
+      "hasOffer": true,
+      "offerText": "Flat ₹50 OFF",
+      "discountType": "flat_amount",
+      "discountValue": 50,
+      "originalPrice": 179,
+      "discountedPrice": 129
+    }
   },
   "g26": {
     "id": "g26",
@@ -387,7 +587,15 @@
     "unit": "500g pack",
     "nutritionInfo": "High Fiber, Whole Grain, B Vitamins, Iron",
     "source": "grocery",
-    "isVeg": true
+    "isVeg": true,
+    "offer": {
+      "hasOffer": false,
+      "offerText": null,
+      "discountType": null,
+      "discountValue": 0,
+      "originalPrice": 119,
+      "discountedPrice": 119
+    }
   },
   "g27": {
     "id": "g27",
@@ -402,7 +610,15 @@
     "unit": "200g pack",
     "nutritionInfo": "Healthy Fats, Magnesium, Zinc, Copper, Protein",
     "source": "grocery",
-    "isVeg": true
+    "isVeg": true,
+    "offer": {
+      "hasOffer": false,
+      "offerText": null,
+      "discountType": null,
+      "discountValue": 0,
+      "originalPrice": 349,
+      "discountedPrice": 349
+    }
   },
   "g28": {
     "id": "g28",
@@ -417,7 +633,15 @@
     "unit": "200g pack",
     "nutritionInfo": "High Protein, Calcium, Vitamin B12, Phosphorus",
     "source": "grocery",
-    "isVeg": true
+    "isVeg": true,
+    "offer": {
+      "hasOffer": true,
+      "offerText": "15% OFF",
+      "discountType": "percentage",
+      "discountValue": 15,
+      "originalPrice": 199,
+      "discountedPrice": 169
+    }
   },
   "g29": {
     "id": "g29",
@@ -432,7 +656,15 @@
     "unit": "1 liter carton",
     "nutritionInfo": "High Vitamin C, Folate, Potassium, Natural Sugars",
     "source": "grocery",
-    "isVeg": true
+    "isVeg": true,
+    "offer": {
+      "hasOffer": true,
+      "offerText": "10% OFF",
+      "discountType": "percentage",
+      "discountValue": 10,
+      "originalPrice": 129,
+      "discountedPrice": 116
+    }
   },
   "g30": {
     "id": "g30",
@@ -447,6 +679,14 @@
     "unit": "100g bar",
     "nutritionInfo": "Antioxidants, Iron, Magnesium, Lower Sugar",
     "source": "grocery",
-    "isVeg": true
+    "isVeg": true,
+    "offer": {
+      "hasOffer": false,
+      "offerText": null,
+      "discountType": null,
+      "discountValue": 0,
+      "originalPrice": 199,
+      "discountedPrice": 199
+    }
   }
 }

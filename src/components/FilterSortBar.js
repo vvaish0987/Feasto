@@ -14,7 +14,8 @@ const FilterSortBar = ({
     vegType: 'all', // all, veg, non-veg
     priceRange: 'all', // all, under100, under150, under200, above200
     category: 'all',
-    restaurant: 'all' // only for food items
+    restaurant: 'all', // only for food items
+    offers: 'all' // all, with-offers, without-offers
   });
   const [showFilters, setShowFilters] = useState(false);
 
@@ -67,6 +68,16 @@ const FilterSortBar = ({
       );
     }
 
+    // Offers filter
+    if (filters.offers !== 'all') {
+      filteredItems = filteredItems.filter(item => {
+        const hasOffer = item.offer && item.offer.hasOffer === true;
+        if (filters.offers === 'with-offers') return hasOffer;
+        if (filters.offers === 'without-offers') return !hasOffer;
+        return true;
+      });
+    }
+
     // Sorting
     filteredItems.sort((a, b) => {
       let aValue, bValue;
@@ -116,7 +127,8 @@ const FilterSortBar = ({
       vegType: 'all',
       priceRange: 'all',
       category: 'all',
-      restaurant: 'all'
+      restaurant: 'all',
+      offers: 'all'
     });
   };
 
@@ -346,6 +358,22 @@ const FilterSortBar = ({
               </select>
             </div>
           )}
+
+          {/* Offers Filter */}
+          <div>
+            <label style={{ fontWeight: 600, color: '#0D0D0D', fontSize: '14px', display: 'block', marginBottom: '5px' }}>
+              🏷️ Offers:
+            </label>
+            <select
+              value={filters.offers}
+              onChange={(e) => handleFilterChange('offers', e.target.value)}
+              style={selectStyle}
+            >
+              <option value="all">All Items</option>
+              <option value="with-offers">🎯 With Offers Only</option>
+              <option value="without-offers">🚫 Without Offers</option>
+            </select>
+          </div>
         </div>
       )}
     </div>
