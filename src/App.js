@@ -16,6 +16,7 @@ import Orders from './pages/Orders';
 import Profile from './pages/Profile';
 import AuthPage from './pages/AuthPage';
 import SeedData from './pages/SeedData';
+import UpdateVegField from './pages/UpdateVegField';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/auth" element={<AuthPage />} />
                 <Route path="/seed" element={<SeedData />} />
+                <Route path="/update-veg" element={<UpdateVegField />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </main>

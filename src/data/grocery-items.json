@@ -11,7 +11,8 @@
     "brand": "FreshFarm Organics",
     "unit": "1 dozen (12 pieces)",
     "nutritionInfo": "High in Potassium, Vitamin B6, Vitamin C",
-    "source": "grocery"
+    "source": "grocery",
+    "isVeg": true
   },
   "g2": {
     "id": "g2",
@@ -25,7 +26,8 @@
     "brand": "Nature's Best",
     "unit": "1 kg pack",
     "nutritionInfo": "High Fiber, Whole Grain, Rich in B Vitamins",
-    "source": "grocery"
+    "source": "grocery",
+    "isVeg": true
   },
   "g3": {
     "id": "g3",
@@ -39,7 +41,8 @@
     "brand": "Golden Harvest",
     "unit": "500ml bottle",
     "nutritionInfo": "Rich in Monounsaturated Fats, Vitamin E, Antioxidants",
-    "source": "grocery"
+    "source": "grocery",
+    "isVeg": true
   },
   "g4": {
     "id": "g4",
@@ -53,7 +56,8 @@
     "brand": "Daily Bread Co.",
     "unit": "400g loaf",
     "nutritionInfo": "High Fiber, Multiple Grains, No Preservatives",
-    "source": "grocery"
+    "source": "grocery",
+    "isVeg": true
   },
   "g5": {
     "id": "g5",
@@ -67,7 +71,8 @@
     "brand": "Nutty Delights",
     "unit": "250g pack",
     "nutritionInfo": "High Protein, Vitamin E, Magnesium, Healthy Fats",
-    "source": "grocery"
+    "source": "grocery",
+    "isVeg": true
   },
   "g6": {
     "id": "g6",
@@ -81,7 +86,8 @@
     "brand": "Pure Dairy",
     "unit": "1 liter carton",
     "nutritionInfo": "High Calcium, Protein, Vitamin D, Riboflavin",
-    "source": "grocery"
+    "source": "grocery",
+    "isVeg": true
   },
   "g7": {
     "id": "g7",
@@ -95,7 +101,8 @@
     "brand": "Country Farm",
     "unit": "6 pieces tray",
     "nutritionInfo": "High Protein, Vitamin B12, Choline, Selenium",
-    "source": "grocery"
+    "source": "grocery",
+    "isVeg": true
   },
   "g8": {
     "id": "g8",
@@ -109,7 +116,8 @@
     "brand": "Farm Fresh",
     "unit": "1 kg pack",
     "nutritionInfo": "Rich in Lycopene, Vitamin C, Potassium, Folate",
-    "source": "grocery"
+    "source": "grocery",
+    "isVeg": true
   },
   "g9": {
     "id": "g9",
@@ -123,7 +131,8 @@
     "brand": "Garden Fresh",
     "unit": "1 kg pack",
     "nutritionInfo": "High in Potassium, Vitamin C, Fiber, B6",
-    "source": "grocery"
+    "source": "grocery",
+    "isVeg": true
   },
   "g10": {
     "id": "g10",
@@ -133,11 +142,12 @@
     "stock": 90,
     "image": "https://images.unsplash.com/photo-1508747703725-719777637510?w=800&auto=format&fit=crop&q=60",
     "description": "Fresh red onions with strong flavor and aroma",
-    "rating": 4.0,
+    "rating": 4,
     "brand": "Veggie Fresh",
     "unit": "1 kg pack",
     "nutritionInfo": "Rich in Antioxidants, Vitamin C, Quercetin",
-    "source": "grocery"
+    "source": "grocery",
+    "isVeg": true
   },
   "g11": {
     "id": "g11",
@@ -151,7 +161,8 @@
     "brand": "Spice Garden",
     "unit": "100g container",
     "nutritionInfo": "Rich in Iron, Manganese, Anti-inflammatory compounds",
-    "source": "grocery"
+    "source": "grocery",
+    "isVeg": true
   },
   "g12": {
     "id": "g12",
@@ -165,7 +176,8 @@
     "brand": "Golden Spice",
     "unit": "100g container",
     "nutritionInfo": "High Curcumin, Anti-inflammatory, Antioxidants",
-    "source": "grocery"
+    "source": "grocery",
+    "isVeg": true
   },
   "g13": {
     "id": "g13",
@@ -179,7 +191,8 @@
     "brand": "Sweet Crystal",
     "unit": "1 kg pack",
     "nutritionInfo": "Pure Sucrose, Quick Energy Source",
-    "source": "grocery"
+    "source": "grocery",
+    "isVeg": true
   },
   "g14": {
     "id": "g14",
@@ -193,7 +206,8 @@
     "brand": "Baker's Choice",
     "unit": "1 kg pack",
     "nutritionInfo": "Enriched with Iron, B Vitamins, Folic Acid",
-    "source": "grocery"
+    "source": "grocery",
+    "isVeg": true
   },
   "g15": {
     "id": "g15",
@@ -207,7 +221,8 @@
     "brand": "Nutty Spread",
     "unit": "350g jar",
     "nutritionInfo": "High Protein, Healthy Fats, Vitamin E, Niacin",
-    "source": "grocery"
+    "source": "grocery",
+    "isVeg": true
   },
   "g16": {
     "id": "g16",
@@ -221,7 +236,8 @@
     "brand": "Italian Classic",
     "unit": "500g pack",
     "nutritionInfo": "High Carbohydrates, Protein, B Vitamins, Iron",
-    "source": "grocery"
+    "source": "grocery",
+    "isVeg": true
   },
   "g17": {
     "id": "g17",
@@ -235,7 +251,8 @@
     "brand": "Tea Garden",
     "unit": "25 tea bags",
     "nutritionInfo": "Rich in Antioxidants, EGCG, Low Caffeine",
-    "source": "grocery"
+    "source": "grocery",
+    "isVeg": true
   },
   "g18": {
     "id": "g18",
@@ -245,11 +262,12 @@
     "stock": 40,
     "image": "https://images.unsplash.com/photo-1583947215259-38e31be8751f?w=800&auto=format&fit=crop&q=60",
     "description": "Concentrated dishwashing liquid with lemon fragrance",
-    "rating": 4.0,
+    "rating": 4,
     "brand": "Clean Pro",
     "unit": "500ml bottle",
     "nutritionInfo": "Biodegradable, Tough on Grease, Gentle on Hands",
-    "source": "grocery"
+    "source": "grocery",
+    "isVeg": true
   },
   "g19": {
     "id": "g19",
@@ -263,7 +281,8 @@
     "brand": "Hygiene Plus",
     "unit": "500ml bottle",
     "nutritionInfo": "Kills 99.9% Germs, Fresh Fragrance, Deep Clean",
-    "source": "grocery"
+    "source": "grocery",
+    "isVeg": true
   },
   "g20": {
     "id": "g20",
@@ -277,7 +296,8 @@
     "brand": "Frozen Fresh",
     "unit": "500g pack",
     "nutritionInfo": "High Fiber, Protein, Vitamin K, Vitamin C",
-    "source": "grocery"
+    "source": "grocery",
+    "isVeg": true
   },
   "g21": {
     "id": "g21",
@@ -291,7 +311,8 @@
     "brand": "Mediterranean Fresh",
     "unit": "500g container",
     "nutritionInfo": "High Protein, Probiotics, Calcium, Low Sugar",
-    "source": "grocery"
+    "source": "grocery",
+    "isVeg": true
   },
   "g22": {
     "id": "g22",
@@ -305,7 +326,8 @@
     "brand": "Royal Grain",
     "unit": "1 kg pack",
     "nutritionInfo": "Low Glycemic Index, Aromatic, Long Grain",
-    "source": "grocery"
+    "source": "grocery",
+    "isVeg": true
   },
   "g23": {
     "id": "g23",
@@ -319,7 +341,8 @@
     "brand": "Golden Nectar",
     "unit": "500g jar",
     "nutritionInfo": "Natural Antioxidants, Enzymes, Antibacterial Properties",
-    "source": "grocery"
+    "source": "grocery",
+    "isVeg": true
   },
   "g24": {
     "id": "g24",
@@ -333,7 +356,8 @@
     "brand": "Garden Fresh Frozen",
     "unit": "1 kg pack",
     "nutritionInfo": "Mixed Vitamins, Fiber, Minerals, No Preservatives",
-    "source": "grocery"
+    "source": "grocery",
+    "isVeg": true
   },
   "g25": {
     "id": "g25",
@@ -347,7 +371,8 @@
     "brand": "Tropical Gold",
     "unit": "500ml bottle",
     "nutritionInfo": "Medium Chain Fatty Acids, Lauric Acid, Vitamin E",
-    "source": "grocery"
+    "source": "grocery",
+    "isVeg": true
   },
   "g26": {
     "id": "g26",
@@ -361,7 +386,8 @@
     "brand": "Healthy Choice",
     "unit": "500g pack",
     "nutritionInfo": "High Fiber, Whole Grain, B Vitamins, Iron",
-    "source": "grocery"
+    "source": "grocery",
+    "isVeg": true
   },
   "g27": {
     "id": "g27",
@@ -375,7 +401,8 @@
     "brand": "Premium Nuts",
     "unit": "200g pack",
     "nutritionInfo": "Healthy Fats, Magnesium, Zinc, Copper, Protein",
-    "source": "grocery"
+    "source": "grocery",
+    "isVeg": true
   },
   "g28": {
     "id": "g28",
@@ -389,7 +416,8 @@
     "brand": "Cheese Craft",
     "unit": "200g pack",
     "nutritionInfo": "High Protein, Calcium, Vitamin B12, Phosphorus",
-    "source": "grocery"
+    "source": "grocery",
+    "isVeg": true
   },
   "g29": {
     "id": "g29",
@@ -403,7 +431,8 @@
     "brand": "Citrus Fresh",
     "unit": "1 liter carton",
     "nutritionInfo": "High Vitamin C, Folate, Potassium, Natural Sugars",
-    "source": "grocery"
+    "source": "grocery",
+    "isVeg": true
   },
   "g30": {
     "id": "g30",
@@ -417,6 +446,7 @@
     "brand": "Cocoa Delight",
     "unit": "100g bar",
     "nutritionInfo": "Antioxidants, Iron, Magnesium, Lower Sugar",
-    "source": "grocery"
+    "source": "grocery",
+    "isVeg": true
   }
 }

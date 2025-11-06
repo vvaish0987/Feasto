@@ -130,6 +130,34 @@ export default function ItemCard({ item, onAdd, onBuyNow, type='food' }){
         </div>
       )}
 
+      {/* Veg/Non-Veg Indicator */}
+      {item.hasOwnProperty('isVeg') && (
+        <div style={{
+          position: 'absolute',
+          top: 15,
+          left: 15,
+          width: 24,
+          height: 24,
+          borderRadius: '50%',
+          border: `2px solid ${item.isVeg ? '#22c55e' : '#ef4444'}`,
+          background: 'rgba(255, 255, 255, 0.9)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '12px',
+          fontWeight: 'bold',
+          backdropFilter: 'blur(10px)',
+          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
+        }}>
+          <div style={{
+            width: 8,
+            height: 8,
+            borderRadius: '50%',
+            background: item.isVeg ? '#22c55e' : '#ef4444'
+          }} />
+        </div>
+      )}
+
       <div style={{display:'flex', gap: '1.5rem', alignItems: 'center'}}>
         {/* Product Image */}
         <div style={{
@@ -188,6 +216,28 @@ export default function ItemCard({ item, onAdd, onBuyNow, type='food' }){
             }}>
               {item.category}
             </span>
+            {item.hasOwnProperty('isVeg') && (
+              <span style={{
+                background: item.isVeg ? '#22c55e' : '#ef4444',
+                color: 'white',
+                padding: '0.3rem 0.8rem',
+                borderRadius: 15,
+                fontSize: '0.8rem',
+                fontWeight: 600,
+                marginRight: '0.5rem',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.3rem'
+              }}>
+                <span style={{
+                  width: 6,
+                  height: 6,
+                  borderRadius: '50%',
+                  background: 'white'
+                }} />
+                {item.isVeg ? 'Veg' : 'Non-Veg'}
+              </span>
+            )}
           </div>
           {item.hotel && (
             <div style={{...metaStyle, marginTop: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
