@@ -1,0 +1,168 @@
+{
+  "food-categories": {
+    "Pizza": {
+      "name": "Pizza",
+      "description": "Wood-fired pizzas with fresh toppings",
+      "icon": "🍕",
+      "type": "food"
+    },
+    "North Indian": {
+      "name": "North Indian",
+      "description": "Rich curries and tandoor specialties",
+      "icon": "🍛",
+      "type": "food"
+    },
+    "South Indian": {
+      "name": "South Indian",
+      "description": "Traditional dosas, idlis, and sambars",
+      "icon": "🥞",
+      "type": "food"
+    },
+    "Rice": {
+      "name": "Rice",
+      "description": "Biryani, fried rice, and rice bowls",
+      "icon": "🍚",
+      "type": "food"
+    },
+    "Desserts": {
+      "name": "Desserts",
+      "description": "Sweet treats and traditional sweets",
+      "icon": "🍰",
+      "type": "food"
+    },
+    "Street Food": {
+      "name": "Street Food",
+      "description": "Authentic Indian street food favorites",
+      "icon": "🌮",
+      "type": "food"
+    },
+    "Noodles": {
+      "name": "Noodles",
+      "description": "Asian noodles and stir-fries",
+      "icon": "🍜",
+      "type": "food"
+    },
+    "Seafood": {
+      "name": "Seafood",
+      "description": "Fresh fish and seafood preparations",
+      "icon": "🐟",
+      "type": "food"
+    },
+    "Breakfast": {
+      "name": "Breakfast",
+      "description": "Healthy morning meals and quick bites",
+      "icon": "🥞",
+      "type": "food"
+    },
+    "Middle Eastern": {
+      "name": "Middle Eastern",
+      "description": "Shawarmas, kebabs, and Mediterranean cuisine",
+      "icon": "🥙",
+      "type": "food"
+    },
+    "Italian": {
+      "name": "Italian",
+      "description": "Pasta, lasagna, and authentic Italian dishes",
+      "icon": "🍝",
+      "type": "food"
+    },
+    "Salads": {
+      "name": "Salads",
+      "description": "Fresh, healthy salads and bowls",
+      "icon": "🥗",
+      "type": "food"
+    },
+    "Sushi": {
+      "name": "Sushi",
+      "description": "Fresh sushi rolls and Japanese cuisine",
+      "icon": "🍣",
+      "type": "food"
+    }
+  },
+  "grocery-categories": {
+    "Fruits": {
+      "name": "Fruits",
+      "description": "Fresh seasonal fruits and berries",
+      "icon": "🍎",
+      "type": "grocery"
+    },
+    "Vegetables": {
+      "name": "Vegetables",
+      "description": "Farm-fresh vegetables and greens",
+      "icon": "🥕",
+      "type": "grocery"
+    },
+    "Dairy": {
+      "name": "Dairy",
+      "description": "Milk, eggs, cheese, and dairy products",
+      "icon": "🥛",
+      "type": "grocery"
+    },
+    "Grains": {
+      "name": "Grains",
+      "description": "Rice, wheat, pasta, and grain products",
+      "icon": "🌾",
+      "type": "grocery"
+    },
+    "Spices": {
+      "name": "Spices",
+      "description": "Aromatic spices and seasonings",
+      "icon": "🌶️",
+      "type": "grocery"
+    },
+    "Cooking Oils": {
+      "name": "Cooking Oils",
+      "description": "Cooking oils and fats for healthy cooking",
+      "icon": "🫒",
+      "type": "grocery"
+    },
+    "Bakery": {
+      "name": "Bakery",
+      "description": "Fresh bread, buns, and baked goods",
+      "icon": "🍞",
+      "type": "grocery"
+    },
+    "Baking Essentials": {
+      "name": "Baking Essentials",
+      "description": "Flour, sugar, and baking ingredients",
+      "icon": "🧁",
+      "type": "grocery"
+    },
+    "Nuts & Dry Fruits": {
+      "name": "Nuts & Dry Fruits",
+      "description": "Healthy nuts, seeds, and dried fruits",
+      "icon": "🥜",
+      "type": "grocery"
+    },
+    "Spreads & Jams": {
+      "name": "Spreads & Jams",
+      "description": "Jams, honey, and nut butters",
+      "icon": "🍯",
+      "type": "grocery"
+    },
+    "Beverages": {
+      "name": "Beverages",
+      "description": "Juices, tea, coffee, and drinks",
+      "icon": "🧃",
+      "type": "grocery"
+    },
+    "Household": {
+      "name": "Household",
+      "description": "Cleaning supplies and household items",
+      "icon": "🧽",
+      "type": "grocery"
+    },
+    "Frozen Foods": {
+      "name": "Frozen Foods",
+      "description": "Frozen vegetables, fruits, and ready meals",
+      "icon": "🧊",
+      "type": "grocery"
+    },
+    "Snacks": {
+      "name": "Snacks",
+      "description": "Healthy snacks and quick bites",
+      "icon": "🍿",
+      "type": "grocery"
+    }
+  }
+}
