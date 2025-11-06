@@ -1,0 +1,143 @@
+{
+  "delivery-partners": [
+    {
+      "id": "dp1",
+      "name": "Ravi Kumar",
+      "phone": "+91 9876543210",
+      "vehicleType": "Bike",
+      "vehicleNumber": "DL-12-AB-3456",
+      "rating": 4.8,
+      "totalDeliveries": 1245,
+      "status": "active",
+      "currentLocation": {
+        "lat": 28.6139,
+        "lng": 77.2090,
+        "area": "Connaught Place"
+      },
+      "profileImage": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
+      "joinedDate": "2023-01-15"
+    },
+    {
+      "id": "dp2",
+      "name": "Priya Singh",
+      "phone": "+91 9876543211",
+      "vehicleType": "Scooter",
+      "vehicleNumber": "DL-14-CD-7890",
+      "rating": 4.9,
+      "totalDeliveries": 987,
+      "status": "active",
+      "currentLocation": {
+        "lat": 28.5355,
+        "lng": 77.3910,
+        "area": "Noida Sector 18"
+      },
+      "profileImage": "https://images.unsplash.com/photo-1494790108755-2616b332c563?w=150&h=150&fit=crop&crop=face",
+      "joinedDate": "2023-02-20"
+    },
+    {
+      "id": "dp3",
+      "name": "Amit Sharma",
+      "phone": "+91 9876543212",
+      "vehicleType": "Bike",
+      "vehicleNumber": "DL-15-EF-1234",
+      "rating": 4.7,
+      "totalDeliveries": 1567,
+      "status": "busy",
+      "currentLocation": {
+        "lat": 28.4595,
+        "lng": 77.0266,
+        "area": "Gurgaon City Center"
+      },
+      "profileImage": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
+      "joinedDate": "2022-11-10"
+    },
+    {
+      "id": "dp4",
+      "name": "Sunita Devi",
+      "phone": "+91 9876543213",
+      "vehicleType": "Scooter",
+      "vehicleNumber": "DL-16-GH-5678",
+      "rating": 4.6,
+      "totalDeliveries": 743,
+      "status": "active",
+      "currentLocation": {
+        "lat": 28.7041,
+        "lng": 77.1025,
+        "area": "Civil Lines"
+      },
+      "profileImage": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
+      "joinedDate": "2023-03-05"
+    },
+    {
+      "id": "dp5",
+      "name": "Rohit Gupta",
+      "phone": "+91 9876543214",
+      "vehicleType": "Bike",
+      "vehicleNumber": "DL-17-IJ-9012",
+      "rating": 4.8,
+      "totalDeliveries": 1089,
+      "status": "offline",
+      "currentLocation": {
+        "lat": 28.6692,
+        "lng": 77.4538,
+        "area": "Laxmi Nagar"
+      },
+      "profileImage": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
+      "joinedDate": "2023-01-30"
+    }
+  ],
+  "delivery-stats": {
+    "totalActivePartners": 4,
+    "totalDeliveriesToday": 156,
+    "averageDeliveryTime": "28 minutes",
+    "customerSatisfactionRate": 4.7,
+    "totalPartnersOnline": 3,
+    "peakHours": ["12:00-14:00", "19:00-21:00"],
+    "coverage-areas": [
+      "Connaught Place",
+      "Karol Bagh",
+      "Lajpat Nagar",
+      "Noida Sector 18",
+      "Gurgaon City Center",
+      "Civil Lines",
+      "Laxmi Nagar",
+      "Janakpuri",
+      "Dwarka",
+      "Rohini"
+    ]
+  },
+  "app-settings": {
+    "deliveryCharges": {
+      "freeDeliveryAbove": 299,
+      "standardCharge": 29,
+      "expressCharge": 49,
+      "nightCharge": 39
+    },
+    "businessHours": {
+      "monday": "06:00-23:00",
+      "tuesday": "06:00-23:00",
+      "wednesday": "06:00-23:00",
+      "thursday": "06:00-23:00",
+      "friday": "06:00-23:00",
+      "saturday": "06:00-23:30",
+      "sunday": "07:00-23:30"
+    },
+    "paymentMethods": [
+      "Credit Card",
+      "Debit Card",
+      "UPI",
+      "Net Banking",
+      "Cash on Delivery",
+      "Digital Wallets"
+    ],
+    "supportInfo": {
+      "phone": "+91 1800-123-4567",
+      "email": "support@feasto.com",
+      "chatSupport": true,
+      "emergencyContact": "+91 9999-888-777"
+    },
+    "appVersion": "2.1.0",
+    "minimumOrderValue": 99,
+    "maxDeliveryRadius": 15
+  }
+}
