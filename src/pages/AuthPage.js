@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
-export default function AuthPage(){
+export default function AuthPage() {
   const [mode, setMode] = useState('login');
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
