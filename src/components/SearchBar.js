@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import catalog from '../services/catalogService';
 import ItemCard from './ItemCard';
 
-export default function SearchBar({ initialType, onAdd, onBuyNow }){
+export default function SearchBar({ initialType, onAdd, onBuyNow, compact=false }){
   const [type, setType] = useState(initialType || 'all'); // 'all' | 'food' | 'grocery'
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('All');
@@ -113,30 +113,12 @@ export default function SearchBar({ initialType, onAdd, onBuyNow }){
             }
           }} 
         />
-        <select 
-          value={type} 
-          onChange={(e)=> setType(e.target.value)} 
-          style={{
-            padding: '12px 16px',
-            borderRadius: 12,
-            border: '2px solid var(--glass-border-light)',
-            background: 'rgba(255, 255, 255, 0.9)',
-            fontSize: '1rem',
-            fontFamily: 'var(--font-primary)',
-            cursor: 'pointer',
-            transition: 'var(--transition-normal)',
-            minWidth: 120
-          }}
-        >
-          <option value="all">All</option>
-          <option value="food">Food</option>
-          <option value="grocery">Grocery</option>
-        </select>
-        {showCategory && (
+        {/* If compact is true, hide the type/category selectors to keep the UI minimal (used in header/hero) */}
+        {!compact && (
           <>
             <select 
-              value={category} 
-              onChange={(e)=> setCategory(e.target.value)}
+              value={type} 
+              onChange={(e)=> setType(e.target.value)} 
               style={{
                 padding: '12px 16px',
                 borderRadius: 12,
@@ -146,29 +128,52 @@ export default function SearchBar({ initialType, onAdd, onBuyNow }){
                 fontFamily: 'var(--font-primary)',
                 cursor: 'pointer',
                 transition: 'var(--transition-normal)',
-                minWidth: 150
+                minWidth: 120
               }}
             >
-              {categories.map(c=> (<option key={c} value={c}>{c}</option>))}
+              <option value="all">All</option>
+              <option value="food">Food</option>
+              <option value="grocery">Grocery</option>
             </select>
-            {type === 'food' && (
-              <select 
-                value={restaurant} 
-                onChange={(e)=> setRestaurant(e.target.value)}
-                style={{
-                  padding: '12px 16px',
-                  borderRadius: 12,
-                  border: '2px solid var(--glass-border-light)',
-                  background: 'rgba(255, 255, 255, 0.9)',
-                  fontSize: '1rem',
-                  fontFamily: 'var(--font-primary)',
-                  cursor: 'pointer',
-                  transition: 'var(--transition-normal)',
-                  minWidth: 180
-                }}
-              >
-                {restaurants.map(r=> (<option key={r} value={r}>{r}</option>))}
-              </select>
+            {showCategory && (
+              <>
+                <select 
+                  value={category} 
+                  onChange={(e)=> setCategory(e.target.value)}
+                  style={{
+                    padding: '12px 16px',
+                    borderRadius: 12,
+                    border: '2px solid var(--glass-border-light)',
+                    background: 'rgba(255, 255, 255, 0.9)',
+                    fontSize: '1rem',
+                    fontFamily: 'var(--font-primary)',
+                    cursor: 'pointer',
+                    transition: 'var(--transition-normal)',
+                    minWidth: 150
+                  }}
+                >
+                  {categories.map(c=> (<option key={c} value={c}>{c}</option>))}
+                </select>
+                {type === 'food' && (
+                  <select 
+                    value={restaurant} 
+                    onChange={(e)=> setRestaurant(e.target.value)}
+                    style={{
+                      padding: '12px 16px',
+                      borderRadius: 12,
+                      border: '2px solid var(--glass-border-light)',
+                      background: 'rgba(255, 255, 255, 0.9)',
+                      fontSize: '1rem',
+                      fontFamily: 'var(--font-primary)',
+                      cursor: 'pointer',
+                      transition: 'var(--transition-normal)',
+                      minWidth: 180
+                    }}
+                  >
+                    {restaurants.map(r=> (<option key={r} value={r}>{r}</option>))}
+                  </select>
+                )}
+              </>
             )}
           </>
         )}

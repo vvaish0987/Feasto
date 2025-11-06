@@ -100,9 +100,14 @@ export default function Footer() {
               fontSize: '2rem',
               background: 'linear-gradient(135deg, #FFB800 0%, #FF8C00 100%)',
               padding: '0.5rem',
-              borderRadius: 12
+              borderRadius: 12,
+              width: 50,
+              height: 50,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
             }}>
-              🍽️
+              <i className="fa-solid fa-utensils" style={{color: '#0D0D0D'}}></i>
             </div>
             <h3 style={{
               fontSize: '1.8rem',
@@ -134,7 +139,7 @@ export default function Footer() {
                 e.target.style.transform = 'translateY(0)';
               }}
             >
-              📘
+              <i className="fa-brands fa-facebook-f"></i>
             </div>
             <div 
               style={socialIconStyle}
@@ -149,7 +154,7 @@ export default function Footer() {
                 e.target.style.transform = 'translateY(0)';
               }}
             >
-              🐦
+              <i className="fa-brands fa-twitter"></i>
             </div>
             <div 
               style={socialIconStyle}
@@ -164,7 +169,7 @@ export default function Footer() {
                 e.target.style.transform = 'translateY(0)';
               }}
             >
-              📷
+              <i className="fa-brands fa-instagram"></i>
             </div>
           </div>
         </div>
@@ -340,7 +345,7 @@ export default function Footer() {
               e.target.style.transform = 'translateY(0)';
             }}
           >
-            <span style={{fontSize: '1.2rem'}}>🏍️</span>
+            <i className="fa-solid fa-motorcycle" style={{fontSize: '1.2rem', color: 'var(--primary-color)'}}></i>
             <span>FastTrack Delivery</span>
           </div>
           <div 
@@ -354,7 +359,7 @@ export default function Footer() {
               e.target.style.transform = 'translateY(0)';
             }}
           >
-            <span style={{fontSize: '1.2rem'}}>🚚</span>
+            <i className="fa-solid fa-truck-fast" style={{fontSize: '1.2rem', color: 'var(--primary-color)'}}></i>
             <span>QuickRush</span>
           </div>
           <div 
@@ -368,7 +373,7 @@ export default function Footer() {
               e.target.style.transform = 'translateY(0)';
             }}
           >
-            <span style={{fontSize: '1.2rem'}}>⚡</span>
+            <i className="fa-solid fa-bolt" style={{fontSize: '1.2rem', color: 'var(--primary-color)'}}></i>
             <span>Lightning Express</span>
           </div>
         </div>
@@ -382,7 +387,9 @@ export default function Footer() {
         textAlign: 'center',
         color: 'rgba(255, 255, 255, 0.5)'
       }}>
-        <p>© 2025 FEASTO. All rights reserved. Made with ❤️ for food lovers everywhere.</p>
+        <p>
+          © 2025 FEASTO. All rights reserved. Made with <i className="fa-solid fa-heart" style={{color: '#FF6B6B', margin: '0 4px'}}></i> for food lovers everywhere.
+        </p>
       </div>
     </footer>
   );

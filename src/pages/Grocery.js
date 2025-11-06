@@ -3,7 +3,7 @@ import catalog from '../services/catalogService';
 import ItemCard from '../components/ItemCard';
 import FilterSortBar from '../components/FilterSortBar';
 import { useCart } from '../context/CartContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export default function Grocery(){
   const [categories, setCategories] = useState([]);
@@ -13,6 +13,8 @@ export default function Grocery(){
   const [loadingItems, setLoadingItems] = useState(false);
   const { addItem } = useCart();
   const navigate = useNavigate();
+  const location = useLocation();
+  const initFilters = (location && location.state && location.state.initialFilters) ? location.state.initialFilters : {};
 
   useEffect(()=>{(async ()=>{ const cats = await catalog.getCategories('grocery'); setCategories(cats); })();},[]);
   useEffect(()=>{(async ()=>{ setLoadingItems(true); const its = await catalog.getItems('grocery', 'All'); setAllItems(its); setLoadingItems(false); })();},[]);
@@ -21,29 +23,32 @@ export default function Grocery(){
   function handleBuyNow(item){ addItem(item,1,'grocery'); navigate('/checkout',{ state:{ type:'grocery' } }); }
 
   const headerStyle = {
-    padding: '3rem 2rem',
+    padding: '2.5rem 2rem',
     textAlign: 'center',
-    background: 'linear-gradient(180deg, rgba(13, 13, 13, 0.9) 0%, rgba(13, 13, 13, 0.7) 100%)',
+    background: 'linear-gradient(135deg, rgba(255, 184, 0, 0.1) 0%, rgba(255, 140, 0, 0.05) 100%)',
     marginBottom: '2rem',
-    borderRadius: 24
+    borderRadius: 20,
+    border: '1px solid rgba(255, 184, 0, 0.2)'
   };
 
   return (
     <div style={{maxWidth:1600, margin:'0 auto', padding:'2rem'}}>
       <div style={headerStyle} className="fade-in">
         <h1 style={{
-          fontSize: '3rem',
-          fontWeight: 900,
+          fontSize: '2.5rem',
+          fontWeight: 800,
           fontFamily: 'Montserrat, sans-serif',
-          background: 'linear-gradient(135deg, #FFB800 0%, #FF8C00 100%)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          backgroundClip: 'text',
-          marginBottom: '1rem'
+          color: '#0D0D0D',
+          marginBottom: '0.5rem',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 12
         }}>
-          🛒 Grocery & Essentials
+          <i className="fa-solid fa-basket-shopping" style={{color:'#FFB800'}}></i>
+          Grocery & Essentials
         </h1>
-        <p style={{color: 'rgba(255, 255, 255, 0.7)', fontSize: '1.2rem'}}>
+        <p style={{color: '#666', fontSize: '1.1rem', margin:0}}>
           Fresh groceries delivered to your doorstep
         </p>
       </div>
@@ -55,6 +60,7 @@ export default function Grocery(){
           onFilteredItems={setFilteredItems}
           type="grocery"
           categories={categories}
+          initialFilters={initFilters}
         />
       )}
 

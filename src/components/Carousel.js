@@ -62,9 +62,11 @@ export default function Carousel({ onAdd, onBuyNow }) {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: '90%',
-    maxWidth: '800px',
+    maxWidth: '900px',
     zIndex: 3,
-    padding: '0 1rem'
+    padding: '0 1rem',
+    textAlign: 'center',
+    color: '#fff'
   };
 
   const indicatorContainerStyle = {
@@ -125,10 +127,18 @@ export default function Carousel({ onAdd, onBuyNow }) {
         </div>
       ))}
       <div style={searchContainerStyle} className="fade-in">
-        <SearchBar 
-          onAdd={onAdd} 
-          onBuyNow={onBuyNow}
-        />
+        <div style={{marginBottom: 18}}>
+          <h1 style={{
+            margin: 0,
+            fontSize: '3rem',
+            fontWeight: 800,
+            fontFamily: 'Montserrat, sans-serif',
+            letterSpacing: '1px',
+            color: '#FFFFFF',
+            textShadow: '0 6px 30px rgba(0,0,0,0.5)'
+          }}>Your feast just a click away</h1>
+        </div>
+        <SearchBar compact={true} onAdd={onAdd} onBuyNow={onBuyNow} />
       </div>
       <div style={{...indicatorContainerStyle, bottom: '1rem'}}>
         {carouselImages.map((_, index) => (

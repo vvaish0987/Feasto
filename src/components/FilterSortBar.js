@@ -5,17 +5,18 @@ const FilterSortBar = ({
   onFilteredItems, 
   type = 'food',
   categories = [],
-  restaurants = [] 
+  restaurants = [],
+  initialFilters = {}
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('name');
   const [sortOrder, setSortOrder] = useState('asc');
   const [filters, setFilters] = useState({
-    vegType: 'all', // all, veg, non-veg
-    priceRange: 'all', // all, under100, under150, under200, above200
-    category: 'all',
-    restaurant: 'all', // only for food items
-    offers: 'all' // all, with-offers, without-offers
+    vegType: initialFilters.vegType || 'all', // all, veg, non-veg
+    priceRange: initialFilters.priceRange || 'all', // all, under100, under150, under200, above200
+    category: initialFilters.category || 'all',
+    restaurant: initialFilters.restaurant || 'all', // only for food items
+    offers: initialFilters.offers || 'all' // all, with-offers, without-offers
   });
   const [showFilters, setShowFilters] = useState(false);
 
@@ -124,11 +125,11 @@ const FilterSortBar = ({
     setSortBy('name');
     setSortOrder('asc');
     setFilters({
-      vegType: 'all',
-      priceRange: 'all',
-      category: 'all',
-      restaurant: 'all',
-      offers: 'all'
+      vegType: initialFilters.vegType || 'all',
+      priceRange: initialFilters.priceRange || 'all',
+      category: initialFilters.category || 'all',
+      restaurant: initialFilters.restaurant || 'all',
+      offers: initialFilters.offers || 'all'
     });
   };
 
