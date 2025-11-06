@@ -114,46 +114,46 @@ export default function Navbar(){
   return (
     <header style={navbarStyle}>
       <div style={containerStyle}>
-        <Link to="/" style={{display:'flex', alignItems:'center', gap:12, textDecoration:'none'}}>
-          <img 
-            src={logoIcon} 
-            alt="Feasto" 
-            style={logoStyle}
-            onMouseEnter={(e) => e.target.style.transform = 'scale(1.1) rotate(5deg)'}
-            onMouseLeave={(e) => e.target.style.transform = 'scale(1) rotate(0deg)'}
-          />
-          <span className="text-gradient" style={{fontSize:'1.5rem', fontWeight:700, fontFamily:'Montserrat, sans-serif'}}>
-            FEASTO
-          </span>
-        </Link>
-
-        <nav style={{marginLeft:40, display:'flex', alignItems:'center'}}>
-          <Link to="/" className="hover-underline" style={navLinkStyle}>Home</Link>
-          <Link to="/food" className="hover-underline" style={navLinkStyle}>Food</Link>
-          <Link to="/grocery" className="hover-underline" style={navLinkStyle}>Grocery</Link>
-          <Link to="/orders" className="hover-underline" style={navLinkStyle}>Orders</Link>
+        <nav style={{display:'flex', alignItems:'center', minWidth: '200px'}}>
+          {user && <Link to="/orders" className="hover-underline" style={navLinkStyle}>Orders</Link>}
         </nav>
 
-        <div style={{flex:1}} />
-
-        <div style={{display:'flex', gap:16, alignItems:'center'}}>
-          <Link 
-            to="/cart" 
-            style={cartBadgeStyle}
-            onMouseEnter={(e) => {
-              e.target.style.transform = 'translateY(-2px)';
-              e.target.style.boxShadow = '0 8px 25px rgba(255, 184, 0, 0.6)';
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.transform = 'translateY(0)';
-              e.target.style.boxShadow = '0 4px 15px rgba(255, 184, 0, 0.4)';
-            }}
-          >
-            🛒 Cart <span style={cartCountStyle}>{qty}</span>
+        <div style={{flex: 1, display: 'flex', justifyContent: 'center', position: 'absolute', left: '50%', transform: 'translateX(-50%)', pointerEvents: 'auto', zIndex: 1}}>
+          <Link to="/" style={{textDecoration:'none'}}>
+            <span className="text-gradient" style={{fontSize:'2.8rem', fontWeight:800, fontFamily:'Montserrat, sans-serif', letterSpacing: '2px'}}>
+              FEASTO
+            </span>
           </Link>
+        </div>
+
+        <div style={{display:'flex', gap:16, alignItems:'center', marginLeft: 'auto', minWidth: '200px', justifyContent: 'flex-end'}}>
+          {user && (
+            <Link 
+              to="/cart" 
+              style={cartBadgeStyle}
+              onMouseEnter={(e) => {
+                e.target.style.transform = 'translateY(-2px)';
+                e.target.style.boxShadow = '0 8px 25px rgba(255, 184, 0, 0.6)';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = 'translateY(0)';
+                e.target.style.boxShadow = '0 4px 15px rgba(255, 184, 0, 0.4)';
+              }}
+            >
+              🛒 Cart <span style={cartCountStyle}>{qty}</span>
+            </Link>
+          )}
           
           {user ? (
             <>
+              <Link 
+                to="/" 
+                className="hover-underline" 
+                style={{...navLinkStyle, marginRight: 16, color: '#0D0D0D'}} 
+                title="Home"
+              >
+                <i className="fa-solid fa-house" style={{ fontSize: '1.2rem' }}></i>
+              </Link>
               <Link 
                 to="/profile" 
                 className="hover-underline"
@@ -187,24 +187,34 @@ export default function Navbar(){
               </button>
             </>
           ) : (
-            <Link 
-              to="/auth" 
-              className="btn"
-              style={{
-                background: 'linear-gradient(135deg, #FFB800 0%, #FF8C00 100%)',
-                color: '#0D0D0D',
-                padding: '0.6rem 1.5rem',
-                borderRadius: 25,
-                fontWeight: 600,
-                textDecoration: 'none',
-                transition: 'all 0.3s ease',
-                boxShadow: '0 4px 15px rgba(255, 184, 0, 0.4)',
-                border: 'none',
-                cursor: 'pointer'
-              }}
-            >
-              Login / Register
-            </Link>
+            <>
+              <Link 
+                to="/" 
+                className="hover-underline" 
+                style={{...navLinkStyle, marginRight: 16, color: '#0D0D0D'}} 
+                title="Home"
+              >
+                <i className="fa-solid fa-house" style={{ fontSize: '1.2rem' }}></i>
+              </Link>
+              <Link 
+                to="/auth" 
+                className="btn"
+                style={{
+                  background: 'linear-gradient(135deg, #FFB800 0%, #FF8C00 100%)',
+                  color: '#0D0D0D',
+                  padding: '0.6rem 1.5rem',
+                  borderRadius: 25,
+                  fontWeight: 600,
+                  textDecoration: 'none',
+                  transition: 'all 0.3s ease',
+                  boxShadow: '0 4px 15px rgba(255, 184, 0, 0.4)',
+                  border: 'none',
+                  cursor: 'pointer'
+                }}
+              >
+                Login / Register
+              </Link>
+            </>
           )}
         </div>
       </div>

@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import catalog from '../services/catalogService';
 import HorizontalScroller from '../components/HorizontalScroller';
 import SearchBar from '../components/SearchBar';
+import Carousel from '../components/Carousel';
 import { useCart } from '../context/CartContext';
 
 export default function Inventory(){
@@ -22,16 +23,12 @@ export default function Inventory(){
   },[]);
 
   const heroStyle = {
-    minHeight: '60vh',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'center',
-    padding: '4rem 2rem',
+    height: '90vh',
+    width: '100%',
     position: 'relative',
     overflow: 'hidden',
-    marginBottom: '4rem'
+    marginBottom: '2rem',
+    background: '#000'
   };
 
   const heroTitleStyle = {
@@ -228,17 +225,9 @@ export default function Inventory(){
 
   return (
     <div>
-      {/* Hero Section */}
       {!selected && (
-        <div style={heroStyle}>
-          <h1 style={heroTitleStyle}>Welcome to FEASTO</h1>
-          <p style={heroSubtitleStyle}>
-            Your favorite food & groceries, delivered instantly
-          </p>
-          <div style={{maxWidth:700, width:'100%', marginBottom:'3rem'}} className="slide-in-up delay-2">
-            <SearchBar onAdd={(it)=> addItem && addItem(it,1,it.source||'food')} onBuyNow={(it)=> navigate((it.source==='grocery'? '/grocery':'/food'))} />
-          </div>
-        </div>
+        <Carousel onAdd={(it)=> addItem && addItem(it,1,it.source||'food')} 
+                 onBuyNow={(it)=> navigate((it.source==='grocery'? '/grocery':'/food'))} />
       )}
 
       {/* Selector Cards */}
