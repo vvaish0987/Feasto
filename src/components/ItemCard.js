@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import '../animations.css';
 
-export default function ItemCard({ item, onAdd, onBuyNow, type='food' }){
+export default function ItemCard({ item, onAdd, onBuyNow, type='food', viewMode='list' }){
   const { user } = useAuth();
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
@@ -18,89 +18,35 @@ export default function ItemCard({ item, onAdd, onBuyNow, type='food' }){
     if(onBuyNow) onBuyNow(item, type);
   }
 
+  const isGridView = viewMode === 'grid';
+
   const cardStyle = {
-    background: isHovered ? 'rgba(255, 248, 225, 0.98)' : 'rgba(255, 255, 255, 0.95)',
-    backdropFilter: 'blur(20px) saturate(180%)',
-    border: isHovered ? '2px solid var(--primary-color)' : '1px solid rgba(255, 184, 0, 0.2)',
-    borderRadius: 20,
-    padding: '1.5rem',
+    background: '#fff',
+    border: isHovered ? '2px solid #FFB800' : '1px solid #e5e7eb',
+    borderRadius: 16,
+    padding: isGridView ? '1.25rem' : '1.5rem',
     boxShadow: isHovered 
-      ? '0 20px 60px rgba(255, 184, 0, 0.25), 0 0 30px rgba(255, 184, 0, 0.4)'
-      : '0 8px 32px rgba(255, 184, 0, 0.1)',
-    transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-    transform: isHovered ? 'translateY(-8px) scale(1.02)' : 'translateY(0) scale(1)',
+      ? '0 8px 24px rgba(0,0,0,0.12)'
+      : '0 2px 8px rgba(0,0,0,0.04)',
+    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+    transform: isHovered ? 'translateY(-4px)' : 'translateY(0)',
     position: 'relative',
     overflow: 'hidden',
-    cursor: 'pointer'
-  };
-
-  const imageStyle = {
-    width: 120,
-    height: 120,
-    borderRadius: 16,
-    objectFit: 'cover',
-    border: '2px solid rgba(255, 184, 0, 0.3)',
-    transition: 'transform 0.4s ease',
-    transform: isHovered ? 'scale(1.1) rotate(2deg)' : 'scale(1) rotate(0deg)',
-    boxShadow: '0 8px 20px rgba(0, 0, 0, 0.4)'
-  };
-
-  const nameStyle = {
-    fontWeight: 700,
-    fontSize: '1.2rem',
-    color: '#0D0D0D',
-    marginBottom: '0.5rem',
-    fontFamily: 'Montserrat, sans-serif',
-    transition: 'color 0.3s ease'
-  };
-
-  const priceStyle = {
-    fontSize: '1.4rem',
-    fontWeight: 800,
-    color: 'var(--primary-color)',
-    marginBottom: '0.5rem',
-    fontFamily: 'Montserrat, sans-serif'
-  };
-
-  const metaStyle = {
-    color: 'rgba(13, 13, 13, 0.6)',
-    fontSize: '0.9rem',
-    marginBottom: '0.3rem'
-  };
-
-  const buttonStyle = {
-    background: 'linear-gradient(135deg, #FFB800 0%, #FF8C00 100%)',
-    color: '#0D0D0D',
-    border: 'none',
-    padding: '0.6rem 1.5rem',
-    borderRadius: 25,
-    fontWeight: 600,
     cursor: 'pointer',
-    transition: 'all 0.3s ease',
-    boxShadow: '0 4px 15px rgba(255, 184, 0, 0.4)',
-    fontSize: '0.95rem',
-    fontFamily: 'Poppins, sans-serif'
+    height: '100%',
+    display: 'flex',
+    flexDirection: isGridView ? 'column' : 'row',
+    gap: isGridView ? '1rem' : '1.5rem'
   };
 
-  const secondaryButtonStyle = {
-    ...buttonStyle,
-    background: 'transparent',
-    border: '2px solid #FFB800',
-    color: '#FFB800'
-  };
-
-  const stockBadgeStyle = {
-    position: 'absolute',
-    top: 15,
-    right: 15,
-    background: item.stock > 0 ? 'rgba(34, 197, 94, 0.9)' : 'rgba(239, 68, 68, 0.9)',
-    color: '#fff',
-    padding: '0.3rem 0.8rem',
-    borderRadius: 20,
-    fontSize: '0.8rem',
-    fontWeight: 600,
-    backdropFilter: 'blur(10px)',
-    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)'
+  const imageContainerStyle = {
+    width: isGridView ? '100%' : '180px',
+    height: isGridView ? '200px' : '180px',
+    borderRadius: 12,
+    overflow: 'hidden',
+    flexShrink: 0,
+    background: 'linear-gradient(135deg, #f3f4f6, #e5e7eb)',
+    position: 'relative'
   };
 
   return (
@@ -109,66 +55,22 @@ export default function ItemCard({ item, onAdd, onBuyNow, type='food' }){
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Shimmer effect overlay */}
-      {isHovered && (
-        <div style={{
-          position: 'absolute',
-          top: 0,
-          left: '-100%',
-          width: '100%',
-          height: '100%',
-          background: 'linear-gradient(90deg, transparent, rgba(255, 184, 0, 0.1), transparent)',
-          animation: 'shimmer 1.5s ease-in-out',
-          pointerEvents: 'none'
-        }} />
-      )}
-
-      {/* Offer Badge */}
-      {item.offer && item.offer.hasOffer && (
-        <div style={{
-          position: 'absolute',
-          top: 15,
-          right: item.stock !== undefined ? '100px' : '15px',
-          background: 'linear-gradient(135deg, #e74c3c, #c0392b)',
-          color: '#fff',
-          padding: '0.4rem 0.8rem',
-          borderRadius: 20,
-          fontSize: '0.8rem',
-          fontWeight: 700,
-          backdropFilter: 'blur(10px)',
-          boxShadow: '0 4px 15px rgba(231, 76, 60, 0.4)',
-          animation: 'pulse 2s infinite',
-          zIndex: 5
-        }}>
-          🎉 {item.offer.offerText}
-        </div>
-      )}
-
-      {/* Stock Badge */}
-      {item.stock !== undefined && (
-        <div style={stockBadgeStyle}>
-          {item.stock > 0 ? `${item.stock} in stock` : 'Out of Stock'}
-        </div>
-      )}
-
       {/* Veg/Non-Veg Indicator */}
       {item.hasOwnProperty('isVeg') && (
         <div style={{
           position: 'absolute',
-          top: 15,
-          left: 15,
-          width: 24,
-          height: 24,
-          borderRadius: '50%',
+          top: 12,
+          left: 12,
+          width: 20,
+          height: 20,
+          borderRadius: 4,
           border: `2px solid ${item.isVeg ? '#22c55e' : '#ef4444'}`,
-          background: 'rgba(255, 255, 255, 0.9)',
+          background: '#fff',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          fontSize: '12px',
-          fontWeight: 'bold',
-          backdropFilter: 'blur(10px)',
-          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
+          zIndex: 2,
+          boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
         }}>
           <div style={{
             width: 8,
@@ -179,60 +81,140 @@ export default function ItemCard({ item, onAdd, onBuyNow, type='food' }){
         </div>
       )}
 
-      <div style={{display:'flex', gap: '1.5rem', alignItems: 'center'}}>
-        {/* Product Image */}
+      {/* Stock Badge */}
+      {item.stock !== undefined && item.stock === 0 && (
         <div style={{
-          width: 120,
-          height: 120,
-          borderRadius: 16,
-          overflow: 'hidden',
-          border: '3px solid var(--primary-color)',
-          transition: 'transform 0.4s ease',
-          transform: isHovered ? 'scale(1.1) rotate(2deg)' : 'scale(1) rotate(0deg)',
-          boxShadow: isHovered ? '0 12px 30px rgba(255, 184, 0, 0.4)' : '0 8px 20px rgba(255, 184, 0, 0.2)'
+          position: 'absolute',
+          top: 12,
+          right: 12,
+          background: '#ef4444',
+          color: '#fff',
+          padding: '4px 12px',
+          borderRadius: 6,
+          fontSize: '0.75rem',
+          fontWeight: 600,
+          zIndex: 2,
+          boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
         }}>
-          {item.image ? (
-            <img 
-              src={item.image} 
-              alt={item.name}
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                transition: 'transform 0.4s ease',
-                transform: isHovered ? 'scale(1.1)' : 'scale(1)'
-              }}
-              onError={(e) => {
-                // Fallback to emoji if image fails to load
-                e.target.style.display = 'none';
-                e.target.nextSibling.style.display = 'flex';
-              }}
-            />
-          ) : null}
-          <div style={{
-            width: '100%',
-            height: '100%',
-            background: 'linear-gradient(135deg, #FFB800 0%, #FF8C00 100%)',
-            display: item.image ? 'none' : 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '3rem'
-          }}>
-            {type === 'food' ? '🍽️' : '🛒'}
-          </div>
+          Out of Stock
+        </div>
+      )}
+
+      {/* Product Image */}
+      <div style={imageContainerStyle}>
+        {item.image ? (
+          <img 
+            src={item.image} 
+            alt={item.name}
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              transition: 'transform 0.4s ease',
+              transform: isHovered ? 'scale(1.05)' : 'scale(1)'
+            }}
+            onError={(e) => {
+              e.target.style.display = 'none';
+              e.target.nextSibling.style.display = 'flex';
+            }}
+          />
+        ) : null}
+        <div style={{
+          width: '100%',
+          height: '100%',
+          background: 'linear-gradient(135deg, #FFB800 0%, #FF8C00 100%)',
+          display: item.image ? 'none' : 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: '3rem',
+          color: '#0D0D0D'
+        }}>
+          <i className={`fa-solid ${type === 'food' ? 'fa-utensils' : 'fa-basket-shopping'}`}></i>
         </div>
 
-        <div style={{flex: 1}}>
-          <div style={nameStyle}>{item.name}</div>
+        {/* Offer Badge */}
+        {item.offer && item.offer.hasOffer && (
+          <div style={{
+            position: 'absolute',
+            bottom: 8,
+            left: 8,
+            right: 8,
+            background: 'linear-gradient(135deg, #ef4444, #dc2626)',
+            color: '#fff',
+            padding: '6px 10px',
+            borderRadius: 8,
+            fontSize: '0.75rem',
+            fontWeight: 700,
+            textAlign: 'center',
+            boxShadow: '0 2px 8px rgba(239, 68, 68, 0.4)'
+          }}>
+            <i className="fa-solid fa-tag" style={{marginRight: 4}}></i>
+            {item.offer.offerText}
+          </div>
+        )}
+      </div>
+
+      {/* Content Section */}
+      <div style={{
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        minWidth: 0
+      }}>
+        <div>
+          <h3 style={{
+            fontWeight: 700,
+            fontSize: isGridView ? '1.1rem' : '1.25rem',
+            color: '#0D0D0D',
+            marginBottom: '0.5rem',
+            fontFamily: 'Montserrat, sans-serif',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: isGridView ? 'nowrap' : 'normal'
+          }}>{item.name}</h3>
           
-          {/* Price Display with Offers */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '0.5rem' }}>
+          {/* Restaurant/Brand Info */}
+          {(item.hotel || item.brand) && (
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              marginBottom: '0.75rem',
+              color: '#6b7280',
+              fontSize: '0.875rem'
+            }}>
+              <i className="fa-solid fa-location-dot" style={{color: '#FFB800', fontSize: '0.75rem'}}></i>
+              <span>{item.hotel?.name || item.brand}</span>
+            </div>
+          )}
+
+          {/* Category Badge */}
+          <div style={{marginBottom: '0.75rem'}}>
+            <span style={{
+              background: '#f3f4f6',
+              color: '#374151',
+              padding: '4px 12px',
+              borderRadius: 6,
+              fontSize: '0.8rem',
+              fontWeight: 600,
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px'
+            }}>
+              <i className="fa-solid fa-layer-group" style={{fontSize: '0.7rem'}}></i>
+              {item.category}
+            </span>
+          </div>
+
+          {/* Price Display */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1rem', flexWrap: 'wrap' }}>
             {item.offer && item.offer.hasOffer && item.offer.discountedPrice !== item.price ? (
               <>
                 <div style={{
-                  fontSize: '1.4rem',
+                  fontSize: '1.5rem',
                   fontWeight: 800,
-                  color: 'var(--primary-color)',
+                  color: '#0D0D0D',
                   fontFamily: 'Montserrat, sans-serif'
                 }}>
                   ₹{item.offer.discountedPrice}
@@ -240,92 +222,95 @@ export default function ItemCard({ item, onAdd, onBuyNow, type='food' }){
                 <div style={{
                   fontSize: '1rem',
                   fontWeight: 500,
-                  color: 'rgba(13, 13, 13, 0.5)',
-                  textDecoration: 'line-through',
-                  fontFamily: 'Montserrat, sans-serif'
+                  color: '#9ca3af',
+                  textDecoration: 'line-through'
                 }}>
                   ₹{item.offer.originalPrice}
                 </div>
                 {item.offer.discountType === 'percentage' && (
                   <div style={{
-                    background: 'linear-gradient(135deg, #27ae60, #2ecc71)',
+                    background: '#22c55e',
                     color: 'white',
-                    padding: '2px 8px',
-                    borderRadius: '8px',
+                    padding: '3px 8px',
+                    borderRadius: '6px',
                     fontSize: '0.75rem',
                     fontWeight: 600
                   }}>
-                    -{item.offer.discountValue}%
+                    {item.offer.discountValue}% OFF
                   </div>
                 )}
               </>
             ) : (
-              <div style={priceStyle}>₹{item.price}</div>
+              <div style={{
+                fontSize: '1.5rem',
+                fontWeight: 800,
+                color: '#0D0D0D',
+                fontFamily: 'Montserrat, sans-serif'
+              }}>₹{item.price}</div>
             )}
           </div>
-          <div style={metaStyle}>
-            <span style={{
-              background: 'var(--primary-color)',
-              color: '#0D0D0D',
-              padding: '0.3rem 0.8rem',
-              borderRadius: 15,
-              fontSize: '0.8rem',
-              fontWeight: 600,
-              marginRight: '0.5rem'
-            }}>
-              {item.category}
-            </span>
-            {item.hasOwnProperty('isVeg') && (
-              <span style={{
-                background: item.isVeg ? '#22c55e' : '#ef4444',
-                color: 'white',
-                padding: '0.3rem 0.8rem',
-                borderRadius: 15,
-                fontSize: '0.8rem',
-                fontWeight: 600,
-                marginRight: '0.5rem',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.3rem'
-              }}>
-                <span style={{
-                  width: 6,
-                  height: 6,
-                  borderRadius: '50%',
-                  background: 'white'
-                }} />
-                {item.isVeg ? 'Veg' : 'Non-Veg'}
-              </span>
-            )}
-          </div>
-          {item.hotel && (
-            <div style={{...metaStyle, marginTop: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem'}}>
-              <span style={{color: 'var(--primary-color)', fontSize: '1rem'}}>📍</span> 
-              <span style={{fontWeight: 500}}>{item.hotel.name}</span>
-            </div>
-          )}
         </div>
 
-        <div style={{display:'flex', flexDirection:'column', gap: 10}}>
+        {/* Action Buttons */}
+        <div style={{
+          display: 'flex',
+          gap: '10px',
+          marginTop: 'auto',
+          flexDirection: isGridView ? 'column' : 'row'
+        }}>
           <button 
-            style={buttonStyle}
+            style={{
+              flex: 1,
+              background: item.stock > 0 ? 'linear-gradient(135deg, #FFB800 0%, #FF8C00 100%)' : '#e5e7eb',
+              color: item.stock > 0 ? '#0D0D0D' : '#9ca3af',
+              border: 'none',
+              padding: '12px 20px',
+              borderRadius: 10,
+              fontWeight: 600,
+              cursor: item.stock > 0 ? 'pointer' : 'not-allowed',
+              transition: 'all 0.3s ease',
+              fontSize: '0.95rem',
+              fontFamily: 'Poppins, sans-serif',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '8px',
+              boxShadow: item.stock > 0 ? '0 2px 8px rgba(255, 184, 0, 0.3)' : 'none'
+            }}
             onClick={handleAdd} 
-            disabled={item.stock<=0}
+            disabled={item.stock <= 0}
             onMouseEnter={(e) => {
               if(item.stock > 0){
                 e.target.style.transform = 'translateY(-2px)';
-                e.target.style.boxShadow = '0 8px 25px rgba(255, 184, 0, 0.6)';
+                e.target.style.boxShadow = '0 4px 12px rgba(255, 184, 0, 0.4)';
               }
             }}
             onMouseLeave={(e) => {
               e.target.style.transform = 'translateY(0)';
-              e.target.style.boxShadow = '0 4px 15px rgba(255, 184, 0, 0.4)';
+              e.target.style.boxShadow = item.stock > 0 ? '0 2px 8px rgba(255, 184, 0, 0.3)' : 'none';
             }}
           >
+            <i className="fa-solid fa-cart-plus"></i>
             {user ? 'Add to Cart' : 'Login to Add'}
           </button>
           <button 
-            style={secondaryButtonStyle}
+            style={{
+              flex: 1,
+              background: '#fff',
+              border: '2px solid #FFB800',
+              color: '#FFB800',
+              padding: '12px 20px',
+              borderRadius: 10,
+              fontWeight: 600,
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              fontSize: '0.95rem',
+              fontFamily: 'Poppins, sans-serif',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '8px'
+            }}
             onClick={handleBuyNow}
             onMouseEnter={(e) => {
               e.target.style.background = '#FFB800';
@@ -333,12 +318,13 @@ export default function ItemCard({ item, onAdd, onBuyNow, type='food' }){
               e.target.style.transform = 'translateY(-2px)';
             }}
             onMouseLeave={(e) => {
-              e.target.style.background = 'transparent';
+              e.target.style.background = '#fff';
               e.target.style.color = '#FFB800';
               e.target.style.transform = 'translateY(0)';
             }}
           >
-            {user ? 'Buy Now' : 'Login to Buy'}
+            <i className="fa-solid fa-bolt"></i>
+            {user ? 'Buy Now' : 'Login'}
           </button>
         </div>
       </div>

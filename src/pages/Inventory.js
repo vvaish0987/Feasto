@@ -69,7 +69,7 @@ export default function Inventory(){
     return (
       <div className="stagger-children" style={{display:'grid', gridTemplateColumns:'1fr 1fr', gap:32, maxWidth:1200, margin:'0 auto', padding:'0 2rem'}}>
         <div 
-          onClick={()=> setSelected('food')}
+          onClick={()=> navigate('/food')}
           style={selectorCardStyle(true)}
           onMouseEnter={(e) => {
             e.currentTarget.style.transform = 'translateY(-10px) scale(1.02)';
@@ -113,7 +113,7 @@ export default function Inventory(){
         </div>
 
         <div 
-          onClick={()=> setSelected('grocery')}
+          onClick={()=> navigate('/grocery')}
           style={selectorCardStyle(false)}
           onMouseEnter={(e) => {
             e.currentTarget.style.transform = 'translateY(-10px) scale(1.02)';
@@ -466,18 +466,18 @@ export default function Inventory(){
           </h3>
           <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fill, minmax(150px, 1fr))', gap:16}}>
             {[
-              {name:'Pizza', icon:'fa-pizza-slice', img:'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&auto=format&fit=crop'},
-              {name:'Burgers', icon:'fa-burger', img:'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&auto=format&fit=crop'},
-              {name:'Sushi', icon:'fa-fish', img:'https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=400&auto=format&fit=crop'},
-              {name:'Desserts', icon:'fa-cake-candles', img:'https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400&auto=format&fit=crop'},
-              {name:'Beverages', icon:'fa-mug-hot', img:'https://images.unsplash.com/photo-1544787219-7f47ccb76574?w=400&auto=format&fit=crop'},
-              {name:'Snacks', icon:'fa-cookie', img:'https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=400&auto=format&fit=crop'},
-              {name:'Vegetarian', icon:'fa-leaf', img:'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&auto=format&fit=crop'},
-              {name:'Indian', icon:'fa-bowl-rice', img:'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400&auto=format&fit=crop'}
+              {name:'Pizza', category:'Pizza', icon:'fa-pizza-slice', img:'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&auto=format&fit=crop'},
+              {name:'North Indian', category:'North Indian', icon:'fa-bowl-rice', img:'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400&auto=format&fit=crop'},
+              {name:'Sushi', category:'Sushi', icon:'fa-fish', img:'https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=400&auto=format&fit=crop'},
+              {name:'Desserts', category:'Desserts', icon:'fa-cake-candles', img:'https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400&auto=format&fit=crop'},
+              {name:'South Indian', category:'South Indian', icon:'fa-cookie', img:'https://images.unsplash.com/photo-1630383249896-424e482df921?w=400&auto=format&fit=crop'},
+              {name:'Street Food', category:'Street Food', icon:'fa-burger', img:'https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=400&auto=format&fit=crop'},
+              {name:'Italian', category:'Italian', icon:'fa-pizza-slice', img:'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=400&auto=format&fit=crop'},
+              {name:'Salads', category:'Salads', icon:'fa-leaf', img:'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&auto=format&fit=crop'}
             ].map(cat => (
               <div
                 key={cat.name} 
-                onClick={()=> navigate('/food', { state: { initialFilters: { category: cat.name } } })} 
+                onClick={()=> navigate('/food', { state: { initialFilters: { category: cat.category } } })} 
                 style={{
                   position:'relative',
                   height:140,
@@ -547,14 +547,14 @@ export default function Inventory(){
             gap:20
           }}>
             {[
-              {name:'Fresh Vegetables', icon:'fa-carrot', img:'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&auto=format&fit=crop', discount:'Up to 20% OFF'},
-              {name:'Dairy & Eggs', icon:'fa-egg', img:'https://images.unsplash.com/photo-1628088062854-d1870b4553da?w=400&auto=format&fit=crop', discount:'Fresh Daily'},
-              {name:'Fruits & More', icon:'fa-apple-whole', img:'https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=400&auto=format&fit=crop', discount:'Farm Fresh'},
-              {name:'Pantry Staples', icon:'fa-jar', img:'https://images.unsplash.com/photo-1556910110-a5a63dfd393c?w=400&auto=format&fit=crop', discount:'Best Prices'}
+              {name:'Vegetables', category:'Vegetables', icon:'fa-carrot', img:'https://images.unsplash.com/photo-1540420773420-3366772f4999?w=400&auto=format&fit=crop', discount:'Up to 20% OFF'},
+              {name:'Dairy & Eggs', category:'Dairy', icon:'fa-egg', img:'https://images.unsplash.com/photo-1628088062854-d1870b4553da?w=400&auto=format&fit=crop', discount:'Fresh Daily'},
+              {name:'Fresh Fruits', category:'Fruits', icon:'fa-apple-whole', img:'https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=400&auto=format&fit=crop', discount:'Farm Fresh'},
+              {name:'Pantry Staples', category:'Grains', icon:'fa-jar', img:'https://images.unsplash.com/photo-1556910110-a5a63dfd393c?w=400&auto=format&fit=crop', discount:'Best Prices'}
             ].map(item => (
               <div
                 key={item.name}
-                onClick={() => navigate('/grocery', { state: { initialFilters: { category: item.name } } })}
+                onClick={() => navigate('/grocery', { state: { initialFilters: { category: item.category } } })}
                 style={{
                   position:'relative',
                   borderRadius:16,

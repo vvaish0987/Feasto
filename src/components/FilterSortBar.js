@@ -134,44 +134,42 @@ const FilterSortBar = ({
   };
 
   const filterBarStyle = {
-    background: 'rgba(255, 255, 255, 0.95)',
-    backdropFilter: 'blur(20px) saturate(180%)',
-    border: '1px solid rgba(255, 184, 0, 0.2)',
-    borderRadius: '20px',
+    background: '#fff',
+    border: '1px solid #e5e7eb',
+    borderRadius: '16px',
     padding: '1.5rem',
     marginBottom: '2rem',
-    boxShadow: '0 8px 32px rgba(255, 184, 0, 0.1)',
-    position: 'sticky',
-    top: '100px',
-    zIndex: 10
+    boxShadow: '0 2px 8px rgba(0,0,0,0.04)'
   };
 
   const searchInputStyle = {
     width: '100%',
-    padding: '12px 20px 12px 45px',
-    fontSize: '16px',
-    border: '2px solid rgba(255, 184, 0, 0.3)',
-    borderRadius: '25px',
-    background: 'rgba(255, 255, 255, 0.9)',
+    padding: '14px 20px 14px 50px',
+    fontSize: '15px',
+    border: '2px solid #e5e7eb',
+    borderRadius: '12px',
+    background: '#fff',
     transition: 'all 0.3s ease',
-    fontFamily: 'Poppins, sans-serif'
+    fontFamily: 'Poppins, sans-serif',
+    outline: 'none'
   };
 
   const selectStyle = {
-    padding: '8px 15px',
-    borderRadius: '15px',
-    border: '2px solid rgba(255, 184, 0, 0.3)',
-    background: 'rgba(255, 255, 255, 0.9)',
+    padding: '10px 16px',
+    borderRadius: '10px',
+    border: '2px solid #e5e7eb',
+    background: '#fff',
     color: '#0D0D0D',
     fontFamily: 'Poppins, sans-serif',
     fontSize: '14px',
     cursor: 'pointer',
-    transition: 'all 0.3s ease'
+    transition: 'all 0.3s ease',
+    outline: 'none'
   };
 
   const buttonStyle = {
-    padding: '8px 16px',
-    borderRadius: '15px',
+    padding: '10px 20px',
+    borderRadius: '10px',
     border: 'none',
     background: 'linear-gradient(135deg, #FFB800 0%, #FF8C00 100%)',
     color: '#0D0D0D',
@@ -180,12 +178,17 @@ const FilterSortBar = ({
     fontWeight: 600,
     cursor: 'pointer',
     transition: 'all 0.3s ease',
-    boxShadow: '0 4px 15px rgba(255, 184, 0, 0.4)'
+    boxShadow: '0 2px 8px rgba(255, 184, 0, 0.3)'
   };
 
   const filterToggleStyle = {
     ...buttonStyle,
-    background: showFilters ? 'linear-gradient(135deg, #e74c3c, #c0392b)' : 'linear-gradient(135deg, #3498db, #2980b9)'
+    background: showFilters 
+      ? 'linear-gradient(135deg, #ef4444, #dc2626)' 
+      : 'linear-gradient(135deg, #3b82f6, #2563eb)',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px'
   };
 
   // Get unique restaurants from food items
@@ -199,13 +202,13 @@ const FilterSortBar = ({
       <div style={{ position: 'relative', marginBottom: '1rem' }}>
         <div style={{
           position: 'absolute',
-          left: '15px',
+          left: '18px',
           top: '50%',
           transform: 'translateY(-50%)',
-          fontSize: '20px',
-          color: '#FFB800'
+          fontSize: '18px',
+          color: '#9ca3af'
         }}>
-          🔍
+          <i className="fa-solid fa-search"></i>
         </div>
         <input
           type="text"
@@ -215,10 +218,10 @@ const FilterSortBar = ({
           style={searchInputStyle}
           onFocus={(e) => {
             e.target.style.borderColor = '#FFB800';
-            e.target.style.boxShadow = '0 0 15px rgba(255, 184, 0, 0.3)';
+            e.target.style.boxShadow = '0 0 0 3px rgba(255, 184, 0, 0.1)';
           }}
           onBlur={(e) => {
-            e.target.style.borderColor = 'rgba(255, 184, 0, 0.3)';
+            e.target.style.borderColor = '#e5e7eb';
             e.target.style.boxShadow = 'none';
           }}
         />
@@ -227,18 +230,22 @@ const FilterSortBar = ({
       {/* Sort and Filter Controls */}
       <div style={{ 
         display: 'flex', 
-        gap: '15px', 
+        gap: '12px', 
         alignItems: 'center', 
         flexWrap: 'wrap',
         marginBottom: showFilters ? '1rem' : '0'
       }}>
         {/* Sort By */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <label style={{ fontWeight: 600, color: '#0D0D0D', fontSize: '14px' }}>Sort:</label>
+          <label style={{ fontWeight: 600, color: '#374151', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <i className="fa-solid fa-arrow-down-wide-short"></i> Sort:
+          </label>
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
             style={selectStyle}
+            onFocus={(e) => e.target.style.borderColor = '#FFB800'}
+            onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
           >
             <option value="name">Name</option>
             <option value="price">Price</option>
@@ -249,6 +256,8 @@ const FilterSortBar = ({
             value={sortOrder}
             onChange={(e) => setSortOrder(e.target.value)}
             style={selectStyle}
+            onFocus={(e) => e.target.style.borderColor = '#FFB800'}
+            onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
           >
             <option value="asc">{sortBy === 'name' ? 'A-Z' : 'Low to High'}</option>
             <option value="desc">{sortBy === 'name' ? 'Z-A' : 'High to Low'}</option>
@@ -259,10 +268,17 @@ const FilterSortBar = ({
         <button
           onClick={() => setShowFilters(!showFilters)}
           style={filterToggleStyle}
-          onMouseEnter={(e) => e.target.style.transform = 'translateY(-2px)'}
-          onMouseLeave={(e) => e.target.style.transform = 'translateY(0)'}
+          onMouseEnter={(e) => {
+            e.target.style.transform = 'translateY(-2px)';
+            e.target.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.transform = 'translateY(0)';
+            e.target.style.boxShadow = '0 2px 8px rgba(255, 184, 0, 0.3)';
+          }}
         >
-          {showFilters ? '🔽 Hide Filters' : '🔼 Show Filters'}
+          <i className={`fa-solid ${showFilters ? 'fa-chevron-up' : 'fa-filter'}`}></i>
+          {showFilters ? 'Hide Filters' : 'Show Filters'}
         </button>
 
         {/* Clear Filters */}
@@ -270,12 +286,21 @@ const FilterSortBar = ({
           onClick={clearAllFilters}
           style={{
             ...buttonStyle,
-            background: 'linear-gradient(135deg, #95a5a6, #7f8c8d)'
+            background: '#6b7280',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px'
           }}
-          onMouseEnter={(e) => e.target.style.transform = 'translateY(-2px)'}
-          onMouseLeave={(e) => e.target.style.transform = 'translateY(0)'}
+          onMouseEnter={(e) => {
+            e.target.style.transform = 'translateY(-2px)';
+            e.target.style.background = '#4b5563';
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.transform = 'translateY(0)';
+            e.target.style.background = '#6b7280';
+          }}
         >
-          🗑️ Clear All
+          <i className="fa-solid fa-rotate-left"></i> Clear All
         </button>
       </div>
 
@@ -285,36 +310,40 @@ const FilterSortBar = ({
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
           gap: '15px',
-          padding: '1rem',
-          background: 'rgba(255, 184, 0, 0.05)',
-          borderRadius: '15px',
-          border: '1px solid rgba(255, 184, 0, 0.2)'
+          padding: '1.5rem',
+          background: '#f9fafb',
+          borderRadius: '12px',
+          border: '1px solid #e5e7eb'
         }}>
           {/* Veg/Non-Veg Filter */}
           <div>
-            <label style={{ fontWeight: 600, color: '#0D0D0D', fontSize: '14px', display: 'block', marginBottom: '5px' }}>
-              🌱 Diet Type:
+            <label style={{ fontWeight: 600, color: '#374151', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
+              <i className="fa-solid fa-leaf" style={{color: '#22c55e'}}></i> Diet Type:
             </label>
             <select
               value={filters.vegType}
               onChange={(e) => handleFilterChange('vegType', e.target.value)}
               style={selectStyle}
+              onFocus={(e) => e.target.style.borderColor = '#FFB800'}
+              onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
             >
               <option value="all">All Items</option>
-              <option value="veg">🟢 Vegetarian Only</option>
-              <option value="non-veg">🔴 Non-Vegetarian Only</option>
+              <option value="veg">Vegetarian Only</option>
+              <option value="non-veg">Non-Vegetarian Only</option>
             </select>
           </div>
 
           {/* Price Range Filter */}
           <div>
-            <label style={{ fontWeight: 600, color: '#0D0D0D', fontSize: '14px', display: 'block', marginBottom: '5px' }}>
-              💰 Price Range:
+            <label style={{ fontWeight: 600, color: '#374151', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
+              <i className="fa-solid fa-indian-rupee-sign" style={{color: '#FFB800'}}></i> Price Range:
             </label>
             <select
               value={filters.priceRange}
               onChange={(e) => handleFilterChange('priceRange', e.target.value)}
               style={selectStyle}
+              onFocus={(e) => e.target.style.borderColor = '#FFB800'}
+              onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
             >
               <option value="all">All Prices</option>
               <option value="under100">Under ₹100</option>
@@ -326,13 +355,15 @@ const FilterSortBar = ({
 
           {/* Category Filter */}
           <div>
-            <label style={{ fontWeight: 600, color: '#0D0D0D', fontSize: '14px', display: 'block', marginBottom: '5px' }}>
-              📂 Category:
+            <label style={{ fontWeight: 600, color: '#374151', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
+              <i className="fa-solid fa-layer-group" style={{color: '#3b82f6'}}></i> Category:
             </label>
             <select
               value={filters.category}
               onChange={(e) => handleFilterChange('category', e.target.value)}
               style={selectStyle}
+              onFocus={(e) => e.target.style.borderColor = '#FFB800'}
+              onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
             >
               <option value="all">All Categories</option>
               {categories.filter(cat => cat !== 'All').map(category => (
@@ -344,13 +375,15 @@ const FilterSortBar = ({
           {/* Restaurant Filter (Food only) */}
           {type === 'food' && uniqueRestaurants.length > 0 && (
             <div>
-              <label style={{ fontWeight: 600, color: '#0D0D0D', fontSize: '14px', display: 'block', marginBottom: '5px' }}>
-                🏪 Restaurant:
+              <label style={{ fontWeight: 600, color: '#374151', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
+                <i className="fa-solid fa-store" style={{color: '#f59e0b'}}></i> Restaurant:
               </label>
               <select
                 value={filters.restaurant}
                 onChange={(e) => handleFilterChange('restaurant', e.target.value)}
                 style={selectStyle}
+                onFocus={(e) => e.target.style.borderColor = '#FFB800'}
+                onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
               >
                 <option value="all">All Restaurants</option>
                 {uniqueRestaurants.map(restaurant => (
@@ -362,17 +395,19 @@ const FilterSortBar = ({
 
           {/* Offers Filter */}
           <div>
-            <label style={{ fontWeight: 600, color: '#0D0D0D', fontSize: '14px', display: 'block', marginBottom: '5px' }}>
-              🏷️ Offers:
+            <label style={{ fontWeight: 600, color: '#374151', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '8px' }}>
+              <i className="fa-solid fa-tag" style={{color: '#ef4444'}}></i> Offers:
             </label>
             <select
               value={filters.offers}
               onChange={(e) => handleFilterChange('offers', e.target.value)}
               style={selectStyle}
+              onFocus={(e) => e.target.style.borderColor = '#FFB800'}
+              onBlur={(e) => e.target.style.borderColor = '#e5e7eb'}
             >
               <option value="all">All Items</option>
-              <option value="with-offers">🎯 With Offers Only</option>
-              <option value="without-offers">🚫 Without Offers</option>
+              <option value="with-offers">With Offers Only</option>
+              <option value="without-offers">Without Offers</option>
             </select>
           </div>
         </div>
