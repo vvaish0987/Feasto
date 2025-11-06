@@ -7,7 +7,7 @@ import {
   onAuthStateChanged
 } from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
-import { createUserProfile, getUserProfileByUid } from '../services/usersService';
+import { createUserProfile, getUserProfileByUid, getUserProfileByEmail } from '../services/usersService';
 
 const AuthContext = createContext();
 
@@ -31,18 +31,34 @@ export function AuthProvider({ children }){
   useEffect(()=>{
     const unsub = onAuthStateChanged(auth, async (u)=>{
       if(u){
-        setUser({ uid: u.uid, email: u.email });
-        // ensure a minimal users_uid document exists; helps when rules block legacy writes
+        // Try to load full profile from Firestore (prefer uid-keyed doc)
         try{
-          const existing = await getUserProfileByUid(u.uid);
-          if(!existing){
-            // create a minimal profile (do not block login if this fails)
-            await createUserProfile(u.email, u.uid, { email: u.email });
+          let profile = await getUserProfileByUid(u.uid);
+          if(!profile && u.email){
+            // try legacy email-keyed document as a fallback
+            profile = await getUserProfileByEmail(u.email);
+          }
+          if(profile){
+            // ensure uid is present
+            profile.uid = profile.uid || u.uid;
+            setUser(profile);
+          } else {
+            // fallback: create a minimal profile and set it
+            try{
+              const created = await createUserProfile(u.email, u.uid, { email: u.email });
+              setUser({ uid: u.uid, email: u.email, ...(created || {}) });
+            }catch(createErr){
+              console.warn('Could not create minimal profile:', createErr);
+              setUser({ uid: u.uid, email: u.email });
+            }
           }
         }catch(err){
-          console.warn('Could not ensure user profile on auth state change', err);
+          console.warn('Could not load user profile on auth state change', err);
+          setUser({ uid: u.uid, email: u.email });
         }
-      } else setUser(null);
+      } else {
+        setUser(null);
+      }
       setLoading(false);
     });
     return () => unsub();
@@ -85,8 +101,27 @@ export function AuthProvider({ children }){
     setUser(null);
   }
 
+  // Refresh the user's profile from Firestore and update local state.
+  async function refreshProfile(){
+    const current = auth.currentUser;
+    if(!current) return null;
+    try{
+      let profile = await getUserProfileByUid(current.uid);
+      if(!profile && current.email) profile = await getUserProfileByEmail(current.email);
+      if(profile){
+        profile.uid = profile.uid || current.uid;
+        setUser(profile);
+        return profile;
+      }
+      return null;
+    }catch(e){
+      console.warn('refreshProfile error', e);
+      return null;
+    }
+  }
+
   return (
-    <AuthContext.Provider value={{ user, register, login, logout, loading }}>
+    <AuthContext.Provider value={{ user, register, login, logout, loading, refreshProfile }}>
       {children}
     </AuthContext.Provider>
   );
