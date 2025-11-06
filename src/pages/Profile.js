@@ -13,6 +13,58 @@ export default function Profile(){
   const [fetchError, setFetchError] = useState('');
   const [verificationMsg, setVerificationMsg] = useState('');
   const [sendingVerification, setSendingVerification] = useState(false);
+  const [validationErrors, setValidationErrors] = useState({});
+  const [useCustomCity, setUseCustomCity] = useState(false);
+
+  // Major Indian cities for dropdown
+  const indianCities = [
+    'Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Kolkata', 
+    'Pune', 'Ahmedabad', 'Jaipur', 'Surat', 'Lucknow', 'Kanpur', 
+    'Nagpur', 'Indore', 'Thane', 'Bhopal', 'Visakhapatnam', 'Patna',
+    'Vadodara', 'Ghaziabad', 'Ludhiana', 'Agra', 'Nashik', 'Faridabad',
+    'Meerut', 'Rajkot', 'Kalyan-Dombivli', 'Vasai-Virar', 'Varanasi',
+    'Srinagar', 'Aurangabad', 'Dhanbad', 'Amritsar', 'Navi Mumbai',
+    'Allahabad', 'Ranchi', 'Howrah', 'Coimbatore', 'Jabalpur', 'Gwalior',
+    'Vijayawada', 'Jodhpur', 'Madurai', 'Raipur', 'Kota'
+  ].sort();
+
+  // Validation functions
+  const validatePhone = (phone) => {
+    const phoneRegex = /^(\+91|91)?[6-9]\d{9}$/;
+    return phoneRegex.test(phone.replace(/\s+/g, ''));
+  };
+
+  const validateName = (name) => {
+    const nameRegex = /^[a-zA-Z\s]{2,}$/;
+    return nameRegex.test(name.trim());
+  };
+
+  const validateForm = () => {
+    const errors = {};
+    
+    if (!profile.name || !profile.name.trim()) {
+      errors.name = 'Name is required';
+    } else if (!validateName(profile.name)) {
+      errors.name = 'Name should contain only letters and be at least 2 characters';
+    }
+    
+    if (profile.phone && !validatePhone(profile.phone)) {
+      errors.phone = 'Please enter a valid 10-digit Indian phone number';
+    }
+    
+    if (!profile.location || !profile.location.trim()) {
+      errors.location = 'City is required';
+    }
+    
+    if (!profile.address || !profile.address.trim()) {
+      errors.address = 'Full address is required';
+    } else if (profile.address.trim().length < 10) {
+      errors.address = 'Please enter a complete address (minimum 10 characters)';
+    }
+    
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
   // Add CSS animations
   const style = document.createElement('style');
@@ -47,6 +99,10 @@ export default function Profile(){
         if(data){
           console.log('Profile loaded', data);
           setProfile(data);
+          // Auto-detect if city is custom (not in predefined list)
+          if(data.location && !indianCities.includes(data.location)){
+            setUseCustomCity(true);
+          }
         } else {
           setFetchError('No profile document found for this user.');
         }
@@ -57,13 +113,29 @@ export default function Profile(){
 
   async function save(){
     if(!user?.email) return setMsg('Please login first');
+    
+    // Validate form
+    if (!validateForm()) {
+      setMsg('Please fix the errors before saving');
+      return;
+    }
+    
     setSaving(true); setMsg('');
     try{
-      const profileToSave = { ...profile, email: user.email, updatedAt: new Date().toISOString(), uid: user.uid };
+      // Normalize phone number
+      const normalizedPhone = profile.phone ? profile.phone.replace(/\s+/g, '').replace(/^(\+91|91)/, '') : '';
+      const profileToSave = { 
+        ...profile, 
+        phone: normalizedPhone,
+        email: user.email, 
+        updatedAt: new Date().toISOString(), 
+        uid: user.uid 
+      };
       // write both places for compatibility with registration
       await setDoc(doc(db, 'users', user.email), profileToSave, { merge:true });
       if(user.uid) await setDoc(doc(db, 'users_uid', user.uid), profileToSave, { merge:true });
-      setMsg('Profile saved');
+      setMsg('Profile saved successfully');
+      setValidationErrors({});
       // refresh auth context so header (and other consumers) pick up the new name immediately
       if(typeof refreshProfile === 'function'){
         try{ await refreshProfile(); }catch(e){ console.warn('refreshProfile after save failed', e); }
@@ -280,11 +352,15 @@ export default function Profile(){
                 </label>
                 <input 
                   value={profile.name||''} 
-                  onChange={e=> setProfile(p=> ({ ...p, name: e.target.value }))}
+                  onChange={e=> {
+                    setProfile(p=> ({ ...p, name: e.target.value }));
+                    if(validationErrors.name) setValidationErrors(prev => ({...prev, name: ''}));
+                  }}
+                  placeholder="Enter your full name"
                   style={{
                     width: '100%',
                     padding: '12px 16px',
-                    border: '2px solid rgba(255, 184, 0, 0.2)',
+                    border: `2px solid ${validationErrors.name ? '#EF4444' : 'rgba(255, 184, 0, 0.2)'}`,
                     borderRadius: '12px',
                     fontSize: '16px',
                     fontFamily: 'inherit',
@@ -292,14 +368,20 @@ export default function Profile(){
                     backgroundColor: 'rgba(255, 255, 255, 0.8)'
                   }}
                   onFocus={(e) => {
-                    e.target.style.borderColor = '#FFB800';
-                    e.target.style.boxShadow = '0 0 15px rgba(255, 184, 0, 0.3)';
+                    e.target.style.borderColor = validationErrors.name ? '#EF4444' : '#FFB800';
+                    e.target.style.boxShadow = `0 0 15px ${validationErrors.name ? 'rgba(239, 68, 68, 0.3)' : 'rgba(255, 184, 0, 0.3)'}`;
                   }}
                   onBlur={(e) => {
-                    e.target.style.borderColor = 'rgba(255, 184, 0, 0.2)';
+                    e.target.style.borderColor = validationErrors.name ? '#EF4444' : 'rgba(255, 184, 0, 0.2)';
                     e.target.style.boxShadow = 'none';
                   }}
                 />
+                {validationErrors.name && (
+                  <p style={{color: '#EF4444', fontSize: '12px', marginTop: '4px', marginBottom: 0}}>
+                    <i className="fa-solid fa-circle-exclamation" style={{marginRight: '4px'}}></i>
+                    {validationErrors.name}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -342,12 +424,17 @@ export default function Profile(){
                 </label>
                 <input 
                   value={profile.phone||''} 
-                  onChange={e=> setProfile(p=> ({ ...p, phone: e.target.value }))}
-                  placeholder="Enter your phone number"
+                  onChange={e=> {
+                    const value = e.target.value.replace(/[^\d\s+]/g, '');
+                    setProfile(p=> ({ ...p, phone: value }));
+                    if(validationErrors.phone) setValidationErrors(prev => ({...prev, phone: ''}));
+                  }}
+                  placeholder="Enter 10-digit phone number"
+                  maxLength={13}
                   style={{
                     width: '100%',
                     padding: '12px 16px',
-                    border: '2px solid rgba(255, 184, 0, 0.2)',
+                    border: `2px solid ${validationErrors.phone ? '#EF4444' : 'rgba(255, 184, 0, 0.2)'}`,
                     borderRadius: '12px',
                     fontSize: '16px',
                     fontFamily: 'inherit',
@@ -355,14 +442,20 @@ export default function Profile(){
                     backgroundColor: 'rgba(255, 255, 255, 0.8)'
                   }}
                   onFocus={(e) => {
-                    e.target.style.borderColor = '#FFB800';
-                    e.target.style.boxShadow = '0 0 15px rgba(255, 184, 0, 0.3)';
+                    e.target.style.borderColor = validationErrors.phone ? '#EF4444' : '#FFB800';
+                    e.target.style.boxShadow = `0 0 15px ${validationErrors.phone ? 'rgba(239, 68, 68, 0.3)' : 'rgba(255, 184, 0, 0.3)'}`;
                   }}
                   onBlur={(e) => {
-                    e.target.style.borderColor = 'rgba(255, 184, 0, 0.2)';
+                    e.target.style.borderColor = validationErrors.phone ? '#EF4444' : 'rgba(255, 184, 0, 0.2)';
                     e.target.style.boxShadow = 'none';
                   }}
                 />
+                {validationErrors.phone && (
+                  <p style={{color: '#EF4444', fontSize: '12px', marginTop: '4px', marginBottom: 0}}>
+                    <i className="fa-solid fa-circle-exclamation" style={{marginRight: '4px'}}></i>
+                    {validationErrors.phone}
+                  </p>
+                )}
               </div>
               <div>
                 <label style={{
@@ -373,31 +466,98 @@ export default function Profile(){
                   fontSize: '14px'
                 }}>
                   <i className="fa-solid fa-location-dot" style={{marginRight:'0.5rem', color:'#FFB800'}}></i>
-                  Location/City
+                  City
                 </label>
-                <input 
-                  value={profile.location||''} 
-                  onChange={e=> setProfile(p=> ({ ...p, location: e.target.value }))} 
-                  placeholder="Enter your city or location"
-                  style={{
-                    width: '100%',
-                    padding: '12px 16px',
-                    border: '2px solid rgba(255, 184, 0, 0.2)',
-                    borderRadius: '12px',
-                    fontSize: '16px',
-                    fontFamily: 'inherit',
-                    transition: 'all 0.3s ease',
-                    backgroundColor: 'rgba(255, 255, 255, 0.8)'
-                  }}
-                  onFocus={(e) => {
-                    e.target.style.borderColor = '#FFB800';
-                    e.target.style.boxShadow = '0 0 15px rgba(255, 184, 0, 0.3)';
-                  }}
-                  onBlur={(e) => {
-                    e.target.style.borderColor = 'rgba(255, 184, 0, 0.2)';
-                    e.target.style.boxShadow = 'none';
-                  }}
-                />
+                
+                {/* Toggle between dropdown and text input */}
+                <div style={{marginBottom: '8px'}}>
+                  <button
+                    type="button"
+                    onClick={() => setUseCustomCity(!useCustomCity)}
+                    style={{
+                      background: 'transparent',
+                      border: 'none',
+                      color: '#FFB800',
+                      fontSize: '13px',
+                      cursor: 'pointer',
+                      padding: '4px 0',
+                      fontWeight: 600,
+                      textDecoration: 'underline'
+                    }}
+                  >
+                    <i className={`fa-solid fa-${useCustomCity ? 'list' : 'keyboard'}`} style={{marginRight: '4px'}}></i>
+                    {useCustomCity ? 'Choose from list' : 'Type custom city'}
+                  </button>
+                </div>
+
+                {useCustomCity ? (
+                  <input 
+                    type="text"
+                    value={profile.location||''} 
+                    onChange={e=> {
+                      setProfile(p=> ({ ...p, location: e.target.value }));
+                      if(validationErrors.location) setValidationErrors(prev => ({...prev, location: ''}));
+                    }}
+                    placeholder="Enter your city name"
+                    style={{
+                      width: '100%',
+                      padding: '12px 16px',
+                      border: `2px solid ${validationErrors.location ? '#EF4444' : 'rgba(255, 184, 0, 0.2)'}`,
+                      borderRadius: '12px',
+                      fontSize: '16px',
+                      fontFamily: 'inherit',
+                      transition: 'all 0.3s ease',
+                      backgroundColor: 'rgba(255, 255, 255, 0.8)'
+                    }}
+                    onFocus={(e) => {
+                      e.target.style.borderColor = validationErrors.location ? '#EF4444' : '#FFB800';
+                      e.target.style.boxShadow = `0 0 15px ${validationErrors.location ? 'rgba(239, 68, 68, 0.3)' : 'rgba(255, 184, 0, 0.3)'}`;
+                    }}
+                    onBlur={(e) => {
+                      e.target.style.borderColor = validationErrors.location ? '#EF4444' : 'rgba(255, 184, 0, 0.2)';
+                      e.target.style.boxShadow = 'none';
+                    }}
+                  />
+                ) : (
+                  <select 
+                    value={profile.location||''} 
+                    onChange={e=> {
+                      setProfile(p=> ({ ...p, location: e.target.value }));
+                      if(validationErrors.location) setValidationErrors(prev => ({...prev, location: ''}));
+                    }}
+                    style={{
+                      width: '100%',
+                      padding: '12px 16px',
+                      border: `2px solid ${validationErrors.location ? '#EF4444' : 'rgba(255, 184, 0, 0.2)'}`,
+                      borderRadius: '12px',
+                      fontSize: '16px',
+                      fontFamily: 'inherit',
+                      transition: 'all 0.3s ease',
+                      backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                      cursor: 'pointer'
+                    }}
+                    onFocus={(e) => {
+                      e.target.style.borderColor = validationErrors.location ? '#EF4444' : '#FFB800';
+                      e.target.style.boxShadow = `0 0 15px ${validationErrors.location ? 'rgba(239, 68, 68, 0.3)' : 'rgba(255, 184, 0, 0.3)'}`;
+                    }}
+                    onBlur={(e) => {
+                      e.target.style.borderColor = validationErrors.location ? '#EF4444' : 'rgba(255, 184, 0, 0.2)';
+                      e.target.style.boxShadow = 'none';
+                    }}
+                  >
+                    <option value="">Select your city</option>
+                    {indianCities.map(city => (
+                      <option key={city} value={city}>{city}</option>
+                    ))}
+                  </select>
+                )}
+                
+                {validationErrors.location && (
+                  <p style={{color: '#EF4444', fontSize: '12px', marginTop: '4px', marginBottom: 0}}>
+                    <i className="fa-solid fa-circle-exclamation" style={{marginRight: '4px'}}></i>
+                    {validationErrors.location}
+                  </p>
+                )}
               </div>
 
               <div>
@@ -413,30 +573,38 @@ export default function Profile(){
                 </label>
                 <textarea 
                   value={profile.address||''} 
-                  onChange={e=> setProfile(p=> ({ ...p, address: e.target.value }))} 
-                  placeholder="Enter your complete address for delivery (include landmarks, floor, apartment number)"
+                  onChange={e=> {
+                    setProfile(p=> ({ ...p, address: e.target.value }));
+                    if(validationErrors.address) setValidationErrors(prev => ({...prev, address: ''}));
+                  }}
+                  placeholder="Enter complete address (House/Apt No., Street, Locality, Landmark, PIN Code)"
                   rows="4"
                   style={{
                     width: '100%',
                     padding: '12px 16px',
-                    border: '2px solid rgba(255, 184, 0, 0.2)',
+                    border: `2px solid ${validationErrors.address ? '#EF4444' : 'rgba(255, 184, 0, 0.2)'}`,
                     borderRadius: '12px',
                     fontSize: '16px',
                     fontFamily: 'inherit',
-                    resize: 'vertical',
-                    minHeight: '100px',
                     transition: 'all 0.3s ease',
-                    backgroundColor: 'rgba(255, 255, 255, 0.8)'
+                    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                    resize: 'vertical'
                   }}
                   onFocus={(e) => {
-                    e.target.style.borderColor = '#FFB800';
-                    e.target.style.boxShadow = '0 0 15px rgba(255, 184, 0, 0.3)';
+                    e.target.style.borderColor = validationErrors.address ? '#EF4444' : '#FFB800';
+                    e.target.style.boxShadow = `0 0 15px ${validationErrors.address ? 'rgba(239, 68, 68, 0.3)' : 'rgba(255, 184, 0, 0.3)'}`;
                   }}
                   onBlur={(e) => {
-                    e.target.style.borderColor = 'rgba(255, 184, 0, 0.2)';
+                    e.target.style.borderColor = validationErrors.address ? '#EF4444' : 'rgba(255, 184, 0, 0.2)';
                     e.target.style.boxShadow = 'none';
                   }}
                 />
+                {validationErrors.address && (
+                  <p style={{color: '#EF4444', fontSize: '12px', marginTop: '4px', marginBottom: 0}}>
+                    <i className="fa-solid fa-circle-exclamation" style={{marginRight: '4px'}}></i>
+                    {validationErrors.address}
+                  </p>
+                )}
               </div>
 
               <div style={{display:'flex', gap:'15px', alignItems: 'center', marginTop: '10px'}}>

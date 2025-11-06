@@ -320,43 +320,6 @@ export default function Inventory(){
               </div>
             ))}
           </div>
-
-          {/* Category filter chips */}
-          {dealCategories.length > 0 && (
-            <div>
-              <h4 style={{fontSize:'1.1rem', marginBottom:12, color:'#666', fontWeight:600}}>Filter by category:</h4>
-              <div style={{display:'flex', gap:10, flexWrap:'wrap'}}>
-                {dealCategories.map(cat=> (
-                  <button 
-                    key={cat} 
-                    onClick={()=> handleDealCategoryClick(cat)} 
-                    style={{
-                      border:'2px solid rgba(255, 184, 0, 0.3)', 
-                      background:'rgba(255, 255, 255, 0.9)', 
-                      padding:'10px 18px', 
-                      borderRadius:25, 
-                      cursor:'pointer',
-                      fontWeight:600,
-                      color:'#0D0D0D',
-                      transition:'all 0.3s ease'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.target.style.background = '#FFB800';
-                      e.target.style.borderColor = '#FFB800';
-                      e.target.style.color = '#0D0D0D';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.target.style.background = 'rgba(255, 255, 255, 0.9)';
-                      e.target.style.borderColor = 'rgba(255, 184, 0, 0.3)';
-                      e.target.style.color = '#0D0D0D';
-                    }}
-                  >
-                    {cat}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
         </section>
       )}
 
@@ -377,7 +340,7 @@ export default function Inventory(){
             {popularRestaurants.map((r, idx)=> {
               const restaurantImages = [
                 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&auto=format&fit=crop',
-                'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=400&auto=format&fit=crop',
+                'https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=400&auto=format&fit=crop',
                 'https://images.unsplash.com/photo-1552566626-52f8b828add9?w=400&auto=format&fit=crop',
                 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&auto=format&fit=crop',
                 'https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?w=400&auto=format&fit=crop',

@@ -13,8 +13,65 @@ export default function AuthPage() {
   const [loading, setLoading] = useState(false);
   const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [resetEmail, setResetEmail] = useState('');
+  const [validationErrors, setValidationErrors] = useState({});
   const { login, register, loginWithGoogle, resetPassword } = useAuth();
   const nav = useNavigate();
+
+  // Validation functions
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePhone = (phone) => {
+    // Indian phone number: 10 digits, optionally starting with +91 or 91
+    const phoneRegex = /^(\+91|91)?[6-9]\d{9}$/;
+    return phoneRegex.test(phone.replace(/\s+/g, ''));
+  };
+
+  const validatePassword = (password) => {
+    // At least 6 characters
+    return password.length >= 6;
+  };
+
+  const validateName = (name) => {
+    // At least 2 characters, only letters and spaces
+    const nameRegex = /^[a-zA-Z\s]{2,}$/;
+    return nameRegex.test(name.trim());
+  };
+
+  const validateForm = () => {
+    const errors = {};
+    
+    if (mode === 'register') {
+      if (!name.trim()) {
+        errors.name = 'Name is required';
+      } else if (!validateName(name)) {
+        errors.name = 'Name should contain only letters and be at least 2 characters';
+      }
+      
+      if (!phone.trim()) {
+        errors.phone = 'Phone number is required';
+      } else if (!validatePhone(phone)) {
+        errors.phone = 'Please enter a valid 10-digit Indian phone number';
+      }
+    }
+    
+    if (!email.trim()) {
+      errors.email = 'Email is required';
+    } else if (!validateEmail(email)) {
+      errors.email = 'Please enter a valid email address';
+    }
+    
+    if (!password) {
+      errors.password = 'Password is required';
+    } else if (!validatePassword(password)) {
+      errors.password = 'Password must be at least 6 characters long';
+    }
+    
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
   // Add CSS animations
   const style = document.createElement('style');
@@ -36,6 +93,13 @@ export default function AuthPage() {
     e.preventDefault(); 
     setErr('');
     setSuccess('');
+    setValidationErrors({});
+    
+    // Validate form
+    if (!validateForm()) {
+      return;
+    }
+    
     try{
       setLoading(true);
       if(mode==='login') {
@@ -44,12 +108,14 @@ export default function AuthPage() {
           setSuccess('Login successful! Please verify your email to access all features.');
         }
       } else {
-        const res = await register(email.trim(), password, { name: name.trim(), phone: phone.trim() });
+        // Normalize phone number (remove spaces and country code for storage)
+        const normalizedPhone = phone.replace(/\s+/g, '').replace(/^(\+91|91)/, '');
+        const res = await register(email.trim(), password, { name: name.trim(), phone: normalizedPhone });
         setSuccess('Account created successfully! Please check your email to verify your account.');
         // ensure profile is created using usersService (best-effort)
         try{
           const { createUserProfile } = await import('../services/usersService');
-          await createUserProfile(email.trim(), res.uid, { name: name.trim(), phone: phone.trim() });
+          await createUserProfile(email.trim(), res.uid, { name: name.trim(), phone: normalizedPhone });
         }catch(e){
           console.warn('Could not create profile via usersService', e);
           // surface a non-blocking message to user
@@ -260,11 +326,14 @@ export default function AuthPage() {
                 <input 
                   placeholder="Enter your full name" 
                   value={name} 
-                  onChange={e=>setName(e.target.value)}
+                  onChange={e=>{
+                    setName(e.target.value);
+                    if(validationErrors.name) setValidationErrors(prev => ({...prev, name: ''}));
+                  }}
                   style={{
                     width: '100%',
                     padding: '12px 16px',
-                    border: '2px solid rgba(255, 184, 0, 0.2)',
+                    border: `2px solid ${validationErrors.name ? '#EF4444' : 'rgba(255, 184, 0, 0.2)'}`,
                     borderRadius: '12px',
                     fontSize: '16px',
                     fontFamily: 'inherit',
@@ -272,14 +341,20 @@ export default function AuthPage() {
                     backgroundColor: 'rgba(255, 255, 255, 0.8)'
                   }}
                   onFocus={(e) => {
-                    e.target.style.borderColor = '#FFB800';
-                    e.target.style.boxShadow = '0 0 15px rgba(255, 184, 0, 0.3)';
+                    e.target.style.borderColor = validationErrors.name ? '#EF4444' : '#FFB800';
+                    e.target.style.boxShadow = `0 0 15px ${validationErrors.name ? 'rgba(239, 68, 68, 0.3)' : 'rgba(255, 184, 0, 0.3)'}`;
                   }}
                   onBlur={(e) => {
-                    e.target.style.borderColor = 'rgba(255, 184, 0, 0.2)';
+                    e.target.style.borderColor = validationErrors.name ? '#EF4444' : 'rgba(255, 184, 0, 0.2)';
                     e.target.style.boxShadow = 'none';
                   }}
                 />
+                {validationErrors.name && (
+                  <p style={{color: '#EF4444', fontSize: '12px', marginTop: '4px', marginBottom: 0}}>
+                    <i className="fa-solid fa-circle-exclamation" style={{marginRight: '4px'}}></i>
+                    {validationErrors.name}
+                  </p>
+                )}
               </div>
             )}
             
@@ -297,12 +372,15 @@ export default function AuthPage() {
               <input 
                 placeholder="Enter your email" 
                 value={email} 
-                onChange={e=>setEmail(e.target.value)}
+                onChange={e=>{
+                  setEmail(e.target.value);
+                  if(validationErrors.email) setValidationErrors(prev => ({...prev, email: ''}));
+                }}
                 type="email"
                 style={{
                   width: '100%',
                   padding: '12px 16px',
-                  border: '2px solid rgba(255, 184, 0, 0.2)',
+                  border: `2px solid ${validationErrors.email ? '#EF4444' : 'rgba(255, 184, 0, 0.2)'}`,
                   borderRadius: '12px',
                   fontSize: '16px',
                   fontFamily: 'inherit',
@@ -310,14 +388,20 @@ export default function AuthPage() {
                   backgroundColor: 'rgba(255, 255, 255, 0.8)'
                 }}
                 onFocus={(e) => {
-                  e.target.style.borderColor = '#FFB800';
-                  e.target.style.boxShadow = '0 0 15px rgba(255, 184, 0, 0.3)';
+                  e.target.style.borderColor = validationErrors.email ? '#EF4444' : '#FFB800';
+                  e.target.style.boxShadow = `0 0 15px ${validationErrors.email ? 'rgba(239, 68, 68, 0.3)' : 'rgba(255, 184, 0, 0.3)'}`;
                 }}
                 onBlur={(e) => {
-                  e.target.style.borderColor = 'rgba(255, 184, 0, 0.2)';
+                  e.target.style.borderColor = validationErrors.email ? '#EF4444' : 'rgba(255, 184, 0, 0.2)';
                   e.target.style.boxShadow = 'none';
                 }}
               />
+              {validationErrors.email && (
+                <p style={{color: '#EF4444', fontSize: '12px', marginTop: '4px', marginBottom: 0}}>
+                  <i className="fa-solid fa-circle-exclamation" style={{marginRight: '4px'}}></i>
+                  {validationErrors.email}
+                </p>
+              )}
             </div>
             
             {mode==='register' && (
@@ -333,13 +417,19 @@ export default function AuthPage() {
                   Phone Number
                 </label>
                 <input 
-                  placeholder="Enter your phone number" 
+                  placeholder="Enter 10-digit phone number" 
                   value={phone} 
-                  onChange={e=>setPhone(e.target.value)}
+                  onChange={e=>{
+                    // Allow only numbers, spaces, + and limit length
+                    const value = e.target.value.replace(/[^\d\s+]/g, '');
+                    setPhone(value);
+                    if(validationErrors.phone) setValidationErrors(prev => ({...prev, phone: ''}));
+                  }}
+                  maxLength={13}
                   style={{
                     width: '100%',
                     padding: '12px 16px',
-                    border: '2px solid rgba(255, 184, 0, 0.2)',
+                    border: `2px solid ${validationErrors.phone ? '#EF4444' : 'rgba(255, 184, 0, 0.2)'}`,
                     borderRadius: '12px',
                     fontSize: '16px',
                     fontFamily: 'inherit',
@@ -347,14 +437,20 @@ export default function AuthPage() {
                     backgroundColor: 'rgba(255, 255, 255, 0.8)'
                   }}
                   onFocus={(e) => {
-                    e.target.style.borderColor = '#FFB800';
-                    e.target.style.boxShadow = '0 0 15px rgba(255, 184, 0, 0.3)';
+                    e.target.style.borderColor = validationErrors.phone ? '#EF4444' : '#FFB800';
+                    e.target.style.boxShadow = `0 0 15px ${validationErrors.phone ? 'rgba(239, 68, 68, 0.3)' : 'rgba(255, 184, 0, 0.3)'}`;
                   }}
                   onBlur={(e) => {
-                    e.target.style.borderColor = 'rgba(255, 184, 0, 0.2)';
+                    e.target.style.borderColor = validationErrors.phone ? '#EF4444' : 'rgba(255, 184, 0, 0.2)';
                     e.target.style.boxShadow = 'none';
                   }}
                 />
+                {validationErrors.phone && (
+                  <p style={{color: '#EF4444', fontSize: '12px', marginTop: '4px', marginBottom: 0}}>
+                    <i className="fa-solid fa-circle-exclamation" style={{marginRight: '4px'}}></i>
+                    {validationErrors.phone}
+                  </p>
+                )}
               </div>
             )}
             
@@ -373,11 +469,14 @@ export default function AuthPage() {
                 placeholder="Enter your password" 
                 type="password" 
                 value={password} 
-                onChange={e=>setPassword(e.target.value)}
+                onChange={e=>{
+                  setPassword(e.target.value);
+                  if(validationErrors.password) setValidationErrors(prev => ({...prev, password: ''}));
+                }}
                 style={{
                   width: '100%',
                   padding: '12px 16px',
-                  border: '2px solid rgba(255, 184, 0, 0.2)',
+                  border: `2px solid ${validationErrors.password ? '#EF4444' : 'rgba(255, 184, 0, 0.2)'}`,
                   borderRadius: '12px',
                   fontSize: '16px',
                   fontFamily: 'inherit',
@@ -385,14 +484,20 @@ export default function AuthPage() {
                   backgroundColor: 'rgba(255, 255, 255, 0.8)'
                 }}
                 onFocus={(e) => {
-                  e.target.style.borderColor = '#FFB800';
-                  e.target.style.boxShadow = '0 0 15px rgba(255, 184, 0, 0.3)';
+                  e.target.style.borderColor = validationErrors.password ? '#EF4444' : '#FFB800';
+                  e.target.style.boxShadow = `0 0 15px ${validationErrors.password ? 'rgba(239, 68, 68, 0.3)' : 'rgba(255, 184, 0, 0.3)'}`;
                 }}
                 onBlur={(e) => {
-                  e.target.style.borderColor = 'rgba(255, 184, 0, 0.2)';
+                  e.target.style.borderColor = validationErrors.password ? '#EF4444' : 'rgba(255, 184, 0, 0.2)';
                   e.target.style.boxShadow = 'none';
                 }}
               />
+              {validationErrors.password && (
+                <p style={{color: '#EF4444', fontSize: '12px', marginTop: '4px', marginBottom: 0}}>
+                  <i className="fa-solid fa-circle-exclamation" style={{marginRight: '4px'}}></i>
+                  {validationErrors.password}
+                </p>
+              )}
             </div>
             
             {err && (
@@ -554,7 +659,12 @@ export default function AuthPage() {
               
               <button 
                 type="button" 
-                onClick={()=> setMode(mode==='login' ? 'register' : 'login')}
+                onClick={()=> {
+                  setMode(mode==='login' ? 'register' : 'login');
+                  setValidationErrors({});
+                  setErr('');
+                  setSuccess('');
+                }}
                 style={{
                   width: '100%',
                   background: 'transparent',
