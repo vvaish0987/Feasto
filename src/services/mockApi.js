@@ -99,17 +99,37 @@ export async function placeOrderForUser(uid, email, cartItems){
     };
 
     await runTransaction(db, async (t)=>{
-      // check and decrement per-item collection
-      for(const c of cartItems){
-        const collectionName = c.source || 'inventory';
-        const ref = doc(db, collectionName, c.id);
-        const snap = await t.get(ref);
-        if(!snap.exists()) throw new Error(`Item ${c.id} not found in ${collectionName}`);
-        const available = snap.data().stock;
-        if(c.qty > available) throw new Error(`Insufficient stock for ${c.id}`);
-        t.update(ref, { stock: available - c.qty });
+      // Firestore requires that all reads in a transaction happen before any writes.
+      // First, perform all reads (t.get) for the items, collect snapshots.
+      const refs = cartItems.map(c => ({
+        item: c,
+        collectionName: c.source || 'inventory',
+        ref: doc(db, (c.source || 'inventory'), c.id)
+      }));
+
+      const snaps = [];
+      for(const r of refs){
+        const s = await t.get(r.ref);
+        snaps.push(s);
       }
-      // write order (include uid for secure rules)
+
+      // Validate availability based on the reads
+      for(let i=0;i<refs.length;i++){
+        const { item, collectionName } = refs[i];
+        const snap = snaps[i];
+        if(!snap.exists()) throw new Error(`Item ${item.id} not found in ${collectionName}`);
+        const available = snap.data().stock;
+        if(item.qty > available) throw new Error(`Insufficient stock for ${item.id}`);
+      }
+
+      // All reads completed and validated — now perform writes (decrements) and the order write
+      for(let i=0;i<refs.length;i++){
+        const { item } = refs[i];
+        const snap = snaps[i];
+        const available = snap.data().stock;
+        t.update(refs[i].ref, { stock: available - item.qty });
+      }
+
       const ordersRef = doc(collection(db, 'orders'), order.id);
       t.set(ordersRef, { ...order, email, uid });
     });
