@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
   const footerStyle = {
@@ -238,8 +239,22 @@ export default function Footer() {
         {/* Customer Support */}
         <div style={sectionStyle}>
           <h4 style={titleStyle}>Support</h4>
-          <a 
-            href="#" 
+          <Link 
+            to="/support" 
+            style={linkStyle}
+            onMouseEnter={(e) => {
+              e.target.style.color = 'var(--primary-color)';
+              e.target.style.paddingLeft = '0.5rem';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.color = 'rgba(255, 255, 255, 0.7)';
+              e.target.style.paddingLeft = '0';
+            }}
+          >
+            Support
+          </Link>
+          <Link 
+            to="/help-center" 
             style={linkStyle}
             onMouseEnter={(e) => {
               e.target.style.color = 'var(--primary-color)';
@@ -251,9 +266,9 @@ export default function Footer() {
             }}
           >
             Help Center
-          </a>
-          <a 
-            href="#" 
+          </Link>
+          <Link 
+            to="/contact-us" 
             style={linkStyle}
             onMouseEnter={(e) => {
               e.target.style.color = 'var(--primary-color)';
@@ -265,9 +280,9 @@ export default function Footer() {
             }}
           >
             Contact Us
-          </a>
-          <a 
-            href="#" 
+          </Link>
+          <Link 
+            to="/privacy-policy" 
             style={linkStyle}
             onMouseEnter={(e) => {
               e.target.style.color = 'var(--primary-color)';
@@ -279,9 +294,9 @@ export default function Footer() {
             }}
           >
             Privacy Policy
-          </a>
-          <a 
-            href="#" 
+          </Link>
+          <Link 
+            to="/terms-of-service" 
             style={linkStyle}
             onMouseEnter={(e) => {
               e.target.style.color = 'var(--primary-color)';
@@ -293,7 +308,7 @@ export default function Footer() {
             }}
           >
             Terms of Service
-          </a>
+          </Link>
         </div>
 
         {/* Newsletter */}

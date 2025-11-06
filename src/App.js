@@ -20,6 +20,11 @@ import AuthPage from './pages/AuthPage';
 import SeedData from './pages/SeedData';
 import UpdateVegField from './pages/UpdateVegField';
 import UpdateOffersField from './pages/UpdateOffersField';
+import Support from './pages/Support';
+import HelpCenter from './pages/HelpCenter';
+import ContactUs from './pages/ContactUs';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
 
 function App() {
   return (
@@ -43,6 +48,11 @@ function App() {
                 <Route path="/seed" element={<SeedData />} />
                 <Route path="/update-veg" element={<UpdateVegField />} />
                 <Route path="/update-offers" element={<UpdateOffersField />} />
+                <Route path="/support" element={<Support />} />
+                <Route path="/help-center" element={<HelpCenter />} />
+                <Route path="/contact-us" element={<ContactUs />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                <Route path="/terms-of-service" element={<TermsOfService />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </main>
