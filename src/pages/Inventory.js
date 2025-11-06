@@ -130,7 +130,7 @@ export default function Inventory(){
             <div style={iconStyle}>
               <i className="fa-solid fa-basket-shopping" style={{fontSize:'3.5rem', color:'#FFB800'}}></i>
             </div>
-            <h2 style={{margin:0, fontSize:'2rem', color:'#fff', fontFamily:'Montserrat, sans-serif'}}>Instamart / Grocery</h2>
+            <h2 style={{margin:0, fontSize:'2rem', color:'#fff', fontFamily:'Montserrat, sans-serif'}}> Grocery</h2>
             <div style={{marginTop:12, color:'rgba(255, 255, 255, 0.7)', fontSize:'1.1rem'}}>
               Instant grocery delivery & daily essentials
             </div>
