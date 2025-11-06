@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { createUserProfile, getUserProfileByUid, getUserProfileByEmail } from '../services/usersService';
-import { db, app } from '../firebase';
+import { db } from '../firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 export default function Profile(){
@@ -70,10 +70,6 @@ export default function Profile(){
   return (
     <div style={{maxWidth:700, margin:'12px auto'}}>
       <h2>Your Profile</h2>
-      <div style={{marginBottom:8, fontSize:12}}>
-        <div className="muted">Debug: Firebase projectId: <strong>{app?.options?.projectId || 'unknown'}</strong></div>
-        <div className="muted">Signed-in UID: <strong>{user?.uid || 'none'}</strong></div>
-      </div>
       <div className="card">
         {loading ? <div className="muted">Loading...</div> : (
           <div style={{display:'grid', gap:8}}>
