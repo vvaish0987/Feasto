@@ -2,9 +2,11 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 import './theme.css';
+import './animations.css';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import Inventory from './pages/Inventory';
 import Food from './pages/Food';
 import Grocery from './pages/Grocery';
@@ -36,6 +38,7 @@ function App() {
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </main>
+            <Footer />
           </div>
         </Router>
       </CartProvider>

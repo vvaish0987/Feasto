@@ -1,15 +1,235 @@
-:root{
-  --feasto-orange: #ff751f;
-  --feasto-dark: #1f1f1f;
-  --feasto-muted: #f6f6f6;
+/* FEASTO Modern Food Delivery UI Theme */
+/* Mustard Yellow & Matte Black Premium Design */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Montserrat:wght@400;500;600;700;800&display=swap');
+
+:root {
+  /* Primary Color Palette - Mustard Yellow Dominant */
+  --primary-color: #FFB800;
+  --mustard-yellow: #FFB800;
+  --mustard-light: #FFD633;
+  --mustard-dark: #E6A600;
+  --secondary-color: #0D0D0D;
+  --matte-black: #0D0D0D;
+  --dark-gray: #1A1A1A;
+  --light-gray: #2A2A2A;
+  --white: #FFFFFF;
+  --off-white: #FFFEF5;
+  --cream: #FFF8E1;
+  
+  /* Accent & Gradient Colors */
+  --yellow-glow: rgba(255, 184, 0, 0.4);
+  --orange-accent: #FF8C00;
+  --gradient-primary: linear-gradient(135deg, #FFB800 0%, #FFD633 50%, #FF8C00 100%);
+  --gradient-yellow: linear-gradient(135deg, #FFB800 0%, #FF8C00 100%);
+  --gradient-dark: linear-gradient(135deg, #0D0D0D 0%, #1A1A1A 100%);
+  --gradient-light: linear-gradient(135deg, #FFFEF5 0%, #FFF8E1 100%);
+  
+  /* Glassmorphism */
+  --glass-bg-light: rgba(255, 248, 225, 0.15);
+  --glass-bg-dark: rgba(13, 13, 13, 0.7);
+  --glass-border-light: rgba(255, 184, 0, 0.2);
+  --glass-border-dark: rgba(255, 255, 255, 0.1);
+  
+  /* Shadows & Depth */
+  --shadow-sm: 0 2px 8px rgba(255, 184, 0, 0.1);
+  --shadow-md: 0 4px 16px rgba(255, 184, 0, 0.15);
+  --shadow-lg: 0 8px 32px rgba(255, 184, 0, 0.2);
+  --shadow-glow: 0 0 30px var(--yellow-glow);
+  
+  /* Typography */
+  --font-primary: 'Poppins', sans-serif;
+  --font-secondary: 'Montserrat', sans-serif;
+  
+  /* Transitions */
+  --transition-fast: 0.2s ease-out;
+  --transition-normal: 0.3s ease-out;
+  --transition-slow: 0.5s ease-out;
+  
+  /* Legacy Support */
+  --feasto-orange: #FFB800;
+  --feasto-dark: #0D0D0D;
+  --feasto-muted: #1A1A1A;
 }
 
-body{ background: var(--feasto-muted); color:var(--feasto-dark); font-family: 'Inter', Arial, sans-serif; }
-.App-main{ padding: 1rem; max-width:1100px; margin:0 auto; }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-.btn{ background:var(--feasto-orange); color:white; border:none; padding:0.5rem 0.75rem; border-radius:6px; cursor:pointer }
-.btn:disabled{ opacity:0.6 }
+body {
+  font-family: var(--font-primary);
+  background: var(--gradient-light);
+  color: var(--matte-black);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+}
 
-.card{ background:white; padding:0.75rem; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.06) }
+/* Animated Background Pattern */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(255, 184, 0, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 212, 51, 0.04) 0%, transparent 50%),
+    radial-gradient(circle at 40% 60%, rgba(255, 140, 0, 0.03) 0%, transparent 50%);
+  animation: ambientMove 25s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
 
-.muted{ color:#666 }
+@keyframes ambientMove {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(30px, -30px) scale(1.1); }
+}
+
+.App-main {
+  padding: 2rem 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* Buttons */
+.btn {
+  background: var(--gradient-yellow);
+  color: var(--matte-black);
+  border: none;
+  padding: 12px 28px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: 600;
+  font-family: var(--font-secondary);
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  transition: all var(--transition-normal);
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg), var(--shadow-glow);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn:disabled {
+  background: var(--light-gray);
+  color: #666;
+  cursor: not-allowed;
+  box-shadow: none;
+  opacity: 0.6;
+}
+
+/* Cards */
+.card {
+  background: var(--dark-gray);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: var(--shadow-md);
+  backdrop-filter: blur(10px);
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 184, 0, 0.1), transparent);
+  transition: left 0.5s;
+}
+
+.card:hover::before {
+  left: 100%;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  border-color: var(--mustard-yellow);
+  box-shadow: var(--shadow-lg), 0 0 30px var(--yellow-glow);
+}
+
+/* Typography Helpers */
+.muted {
+  color: #999;
+  font-size: 0.9rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-secondary);
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 1rem;
+}
+
+h1 { font-size: 3.5rem; letter-spacing: -1px; }
+h2 { font-size: 2.5rem; }
+h3 { font-size: 1.8rem; }
+
+/* Utility Classes */
+.text-gradient {
+  background: var(--gradient-yellow);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glow-text {
+  text-shadow: 0 0 10px var(--yellow-glow);
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--matte-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--mustard-yellow);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--orange-accent);
+}
