@@ -4,7 +4,11 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  onAuthStateChanged
+  onAuthStateChanged,
+  sendEmailVerification,
+  sendPasswordResetEmail,
+  GoogleAuthProvider,
+  signInWithPopup
 } from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import { createUserProfile, getUserProfileByUid, getUserProfileByEmail } from '../services/usersService';
@@ -24,6 +28,9 @@ export function AuthProvider({ children }){
       case 'auth/operation-not-allowed': return 'Email/password sign-in is disabled in Firebase. Enable it in the Firebase Console.';
       case 'auth/wrong-password': return 'Incorrect password.';
       case 'auth/user-not-found': return 'No account found with this email.';
+      case 'auth/popup-closed-by-user': return 'Sign-in popup was closed before completion.';
+      case 'auth/cancelled-popup-request': return 'Sign-in was cancelled.';
+      case 'auth/popup-blocked': return 'Sign-in popup was blocked by browser.';
       default: return err?.message || 'Authentication failed.';
     }
   }
@@ -69,6 +76,16 @@ export function AuthProvider({ children }){
     try{
       if(!email || !password) throw new Error('Email and password required');
       const res = await createUserWithEmailAndPassword(auth, email, password);
+      
+      // Send email verification
+      try{
+        await sendEmailVerification(res.user);
+        console.log('Verification email sent to:', email);
+      }catch(verifyErr){
+        console.warn('Failed to send verification email:', verifyErr);
+        // Don't throw here, just log - user can still use the account
+      }
+      
       // create a user profile document in Firestore keyed by email & uid
       try{
         const profile = { email, uid: res.user.uid, createdAt: new Date().toISOString(), ...(profileData || {}) };
@@ -80,7 +97,7 @@ export function AuthProvider({ children }){
         // throw here so caller sees failure to persist profile (optional)
         throw new Error('Registered successfully but failed to save profile to Firestore: ' + (err.message || err));
       }
-      return { uid: res.user.uid, email: res.user.email };
+      return { uid: res.user.uid, email: res.user.email, emailVerified: res.user.emailVerified };
     }catch(e){
       throw new Error(mapFirebaseError(e));
     }
@@ -90,7 +107,56 @@ export function AuthProvider({ children }){
     try{
       if(!email || !password) throw new Error('Email and password required');
       const res = await signInWithEmailAndPassword(auth, email, password);
-      return { uid: res.user.uid, email: res.user.email };
+      return { uid: res.user.uid, email: res.user.email, emailVerified: res.user.emailVerified };
+    }catch(e){
+      throw new Error(mapFirebaseError(e));
+    }
+  }
+
+  async function loginWithGoogle(){
+    try{
+      const provider = new GoogleAuthProvider();
+      const res = await signInWithPopup(auth, provider);
+      
+      // Check if user profile exists, if not create one
+      try{
+        let profile = await getUserProfileByUid(res.user.uid);
+        if(!profile){
+          // Create profile for new Google user
+          const profileData = {
+            name: res.user.displayName || '',
+            phone: res.user.phoneNumber || ''
+          };
+          await createUserProfile(res.user.email, res.user.uid, profileData);
+        }
+      }catch(err){
+        console.error('Failed to create/load Google user profile:', err);
+      }
+      
+      return { uid: res.user.uid, email: res.user.email, emailVerified: res.user.emailVerified };
+    }catch(e){
+      throw new Error(mapFirebaseError(e));
+    }
+  }
+
+  async function resetPassword(email){
+    try{
+      if(!email) throw new Error('Email is required');
+      await sendPasswordResetEmail(auth, email);
+      return { success: true, message: 'Password reset email sent. Please check your inbox.' };
+    }catch(e){
+      throw new Error(mapFirebaseError(e));
+    }
+  }
+
+  async function resendVerificationEmail(){
+    try{
+      const currentUser = auth.currentUser;
+      if(!currentUser) throw new Error('No user is currently logged in');
+      if(currentUser.emailVerified) throw new Error('Email is already verified');
+      
+      await sendEmailVerification(currentUser);
+      return { success: true, message: 'Verification email sent. Please check your inbox.' };
     }catch(e){
       throw new Error(mapFirebaseError(e));
     }
@@ -121,7 +187,17 @@ export function AuthProvider({ children }){
   }
 
   return (
-    <AuthContext.Provider value={{ user, register, login, logout, loading, refreshProfile }}>
+    <AuthContext.Provider value={{ 
+      user, 
+      register, 
+      login, 
+      loginWithGoogle,
+      resetPassword,
+      resendVerificationEmail,
+      logout, 
+      loading, 
+      refreshProfile 
+    }}>
       {children}
     </AuthContext.Provider>
   );
