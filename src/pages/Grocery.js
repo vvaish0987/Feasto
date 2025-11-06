@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import catalog from '../services/catalogService';
 import ItemCard from '../components/ItemCard';
+import SearchBar from '../components/SearchBar';
 import { useCart } from '../context/CartContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,6 +14,7 @@ export default function Grocery(){
   const { addItem } = useCart();
   const navigate = useNavigate();
 
+
   useEffect(()=>{(async ()=>{ setLoadingCats(true); const cats = await catalog.getCategories('grocery'); setCategories(cats); setLoadingCats(false); })();},[]);
   useEffect(()=>{(async ()=>{ setLoadingItems(true); const its = await catalog.getItems('grocery', category); setItems(its); setLoadingItems(false); })();},[category]);
 
@@ -22,6 +24,7 @@ export default function Grocery(){
   return (
     <div style={{display:'grid', gridTemplateColumns:'1fr 320px', gap:20}}>
       <section>
+        <SearchBar initialType="grocery" onAdd={(it)=> handleAdd(it)} onBuyNow={(it)=> handleBuyNow(it)} />
         <h2>Grocery ordering</h2>
         <div style={{display:'flex', gap:8, marginBottom:12}}>
           {loadingCats ? <div className="muted">Loading categories...</div> : categories.map(c=> (
