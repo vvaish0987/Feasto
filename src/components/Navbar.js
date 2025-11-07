@@ -58,14 +58,7 @@ export default function Navbar(){
     padding: '0.6rem 1.5rem'
   };
 
-  const logoStyle = {
-    width: 48,
-    height: 48,
-    borderRadius: 10,
-    objectFit: 'cover',
-    transition: 'transform 0.3s ease',
-    boxShadow: '0 6px 18px rgba(255, 184, 0, 0.15)'
-  };
+  // Removed unused logoStyle
 
   const navLinkStyle = {
     marginRight: 24,

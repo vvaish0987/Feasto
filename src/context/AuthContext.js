@@ -88,7 +88,7 @@ export function AuthProvider({ children }){
       
       // create a user profile document in Firestore keyed by email & uid
       try{
-        const profile = { email, uid: res.user.uid, createdAt: new Date().toISOString(), ...(profileData || {}) };
+        // Profile data is passed directly to createUserProfile
         // use the usersService which surfaces errors
         await createUserProfile(email, res.user.uid, profileData || {});
       }catch(err){

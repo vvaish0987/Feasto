@@ -46,7 +46,7 @@ export default function SearchBar({ initialType, onAdd, onBuyNow, compact=false,
       }catch(e){ /* ignore */ }
     })();
     return ()=>{ mounted=false; };
-  },[type]);
+  },[type, category, restaurant]);
 
   // debounce search
   useEffect(()=>{

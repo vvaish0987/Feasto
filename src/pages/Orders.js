@@ -36,6 +36,16 @@ export default function Orders(){
 
   return (
     <div style={{background:'#f8f9fa', minHeight:'100vh', paddingBottom:'4rem'}}>
+      {loading && (
+        <div style={{
+          position: 'fixed',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          color: '#FFB800',
+          fontSize: '1.2rem'
+        }}>Loading orders...</div>
+      )}
       {/* Header Section with Animation */}
       <div style={{
         background: 'linear-gradient(135deg, #FFB800 0%, #FF8C00 100%)',
