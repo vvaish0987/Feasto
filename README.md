@@ -1,285 +1,89 @@
-# 🍕 FEASTO - Food & Grocery Delivery Platform 🛒
+FEASTO a modern food and grocery ordering app. It offers a seamless shopping experience with real-time inventory management and order processing.
 
-A modern, full-featured food and grocery delivery application built with React and Firebase.
+TECH STACK
+Frontend: React.js 
+Backend: Firebase(authentication,firestore)
+State Management: React context for cart and auth
+UI: Custom CSS with responsive design
 
-## ✨ Features
+Majorly constituting of four main modules
+1.USER REGISTRATION AND AUTHENTICATION: 
+*Allows users for a easy sign in and login option with proper validations.
+*Once logged in there is a email verification which authenticates the user.
+*The firestore rules protect the privacy of the data.
 
-### 🔐 Authentication
-- Email/Password authentication
-- Google Sign-In integration
-- Email verification
-- Password reset functionality
-- Secure user profiles
+2.BROWSE ITEM INVENTORY: 
+*The app provides different category across food and grocery to explore.
+*It has user friendly interface which makes it easy for accessing.
+*has a creative way for searching items and category.
+*has variety of filters to categorize between veg and non veg.
 
-### 🍽️ Food & Grocery
-- Browse food delivery options
-- Shop for groceries
-- Category-based filtering
-- Search functionality
-- Grid and list view modes
-- Professional item cards with detailed information
+3.SELECTION BASKET/CART: 
+*Allows to add items easily to the cart. more than one number of the same item.
+*Has proper validations to check the stock of the products, give proper error message if product goes out of stock.
+*Session persistence across page refreshes. the cart remains same even if the account is logged out.
+*Allows mutiple logins from multiple devices keeping the data intact.
 
-### 🛒 Shopping Experience
-- Add items to cart
-- Quantity management
-- Separate food and grocery carts
-- Real-time price calculation
-- Taxes and delivery fee calculation
-- Smooth checkout process
+4.CHECKOUT: 
+*A user friendly price breakdown
+*Once payment is done, the user is provided with a order confirmation page with a order ID.
+*Shows whether the order is delivered or not.
+*Displays the order history of the user.
+*Only on succesful transaction will the item be deducted from the stock.
 
-### 👤 User Features
-- Personal profile management
-- Order history tracking
-- Delivery address management
-- Email verification status
-- Order status tracking (In Transit/Delivered)
+5.SECURITY:
+*Firebase Security Rules for data access control
+*Input validation on forms
 
-### 🎨 UI/UX
-- Professional gradient design (Mustard Yellow theme)
-- Animated headers with floating elements
-- FontAwesome icons throughout
-- Responsive design for all devices
-- Smooth transitions and hover effects
-- Clean, modern interface
+DB Collections:
+users - User profiles
+users_uid - User profiles by UID
+food - Food items
+grocery - Grocery items
+inventory - Stock levels
+orders - Order history
+carts - User shopping carts
 
-## 🚀 Quick Start
+API Services:
+usersService.js - User management
+catalogService.js - Product catalog
+mockApi.js - Order processing and inventory
 
-### Prerequisites
-- Node.js (v14 or higher)
-- npm or yarn
-- Firebase account
-- Git
 
-### Installation
+# Getting Started with Create React App
+## Available Scripts
 
-1. **Clone the repository**
-```bash
-git clone <your-repo-url>
-cd feasto
-```
-
-2. **Install dependencies**
-```bash
-npm install
-```
-
-3. **Set up environment variables**
-Create a `.env.local` file in the root directory:
-```env
-REACT_APP_FIREBASE_API_KEY=your_api_key
-REACT_APP_FIREBASE_AUTH_DOMAIN=your_auth_domain
-REACT_APP_FIREBASE_PROJECT_ID=your_project_id
-REACT_APP_FIREBASE_STORAGE_BUCKET=your_storage_bucket
-REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
-REACT_APP_FIREBASE_APP_ID=your_app_id
-REACT_APP_FIREBASE_MEASUREMENT_ID=your_measurement_id
-```
-
-4. **Run the development server**
-```bash
-npm start
-```
-
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-## 📦 Available Scripts
+In the project directory, you can run:
 
 ### `npm start`
-Runs the app in development mode at [http://localhost:3000](http://localhost:3000)
+
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
 ### `npm test`
-Launches the test runner in interactive watch mode
+
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `npm run build`
-Builds the app for production to the `build` folder
 
-## 🌐 Deployment to Vercel
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-### Quick Deploy (Recommended)
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-1. **Push your code to GitHub/GitLab/Bitbucket**
-```bash
-git add .
-git commit -m "Ready for deployment"
-git push origin main
-```
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-2. **Deploy via Vercel Dashboard**
-   - Go to [vercel.com](https://vercel.com)
-   - Import your Git repository
-   - Configure environment variables
-   - Click "Deploy"
+### `npm run eject`
 
-3. **Update Firebase authorized domains**
-   - Add your Vercel domain to Firebase Console
-   - Authentication → Settings → Authorized domains
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-**For detailed deployment instructions, see [DEPLOYMENT.md](./DEPLOYMENT.md)**
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-### Using Deployment Scripts
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-**Windows:**
-```bash
-deploy.bat
-```
-
-**Mac/Linux:**
-```bash
-./deploy.sh
-```
-
-## 📁 Project Structure
-
-```
-feasto/
-├── public/               # Static files
-├── src/
-│   ├── assets/          # Images and icons
-│   ├── components/      # Reusable components
-│   │   ├── Navbar.js
-│   │   ├── Footer.js
-│   │   ├── ItemCard.js
-│   │   ├── FilterSortBar.js
-│   │   └── ...
-│   ├── context/         # React Context providers
-│   │   ├── AuthContext.js
-│   │   └── CartContext.js
-│   ├── pages/           # Page components
-│   │   ├── Food.js
-│   │   ├── Grocery.js
-│   │   ├── Cart.js
-│   │   ├── Checkout.js
-│   │   ├── Orders.js
-│   │   ├── Profile.js
-│   │   ├── AuthPage.js
-│   │   └── Inventory.js
-│   ├── services/        # API and service functions
-│   │   ├── mockApi.js
-│   │   └── usersService.js
-│   ├── firebase.js      # Firebase configuration
-│   ├── App.js           # Main app component
-│   └── index.js         # Entry point
-├── vercel.json          # Vercel configuration
-├── .vercelignore        # Vercel ignore file
-├── DEPLOYMENT.md        # Deployment guide
-└── package.json         # Dependencies and scripts
-```
-
-## 🔧 Configuration Files
-
-- **`vercel.json`** - Vercel deployment configuration
-- **`.env.local`** - Local environment variables (not committed)
-- **`.env.example`** - Environment variables template
-- **`firebase.js`** - Firebase initialization
-
-## 🔐 Firebase Setup
-
-1. Create a Firebase project at [console.firebase.google.com](https://console.firebase.google.com)
-2. Enable Authentication (Email/Password and Google)
-3. Create a Firestore database
-4. Set up security rules
-5. Copy your Firebase config to `.env.local`
-
-### Required Firebase Services
-- ✅ Authentication (Email/Password + Google)
-- ✅ Firestore Database
-- ✅ Analytics (optional)
-
-## 🎯 Environment Variables
-
-| Variable | Description |
-|----------|-------------|
-| `REACT_APP_FIREBASE_API_KEY` | Firebase API Key |
-| `REACT_APP_FIREBASE_AUTH_DOMAIN` | Firebase Auth Domain |
-| `REACT_APP_FIREBASE_PROJECT_ID` | Firebase Project ID |
-| `REACT_APP_FIREBASE_STORAGE_BUCKET` | Firebase Storage Bucket |
-| `REACT_APP_FIREBASE_MESSAGING_SENDER_ID` | Firebase Messaging Sender ID |
-| `REACT_APP_FIREBASE_APP_ID` | Firebase App ID |
-| `REACT_APP_FIREBASE_MEASUREMENT_ID` | Firebase Measurement ID |
-
-## 🛠️ Built With
-
-- **React 19.2** - UI Framework
-- **React Router 6** - Navigation
-- **Firebase 10** - Backend services
-- **FontAwesome** - Icons
-- **Vercel** - Deployment platform
-
-## 📚 Documentation
-
-- [Deployment Guide](./DEPLOYMENT.md) - Complete deployment instructions
-- [Vercel Configuration](./VERCEL_CONFIG.md) - Vercel setup details
-- [Pre-Deployment Checklist](./PRE_DEPLOYMENT_CHECKLIST.md) - Deployment checklist
-
-## 🐛 Troubleshooting
-
-### Build Issues
-```bash
-# Clear cache and rebuild
-rm -rf node_modules package-lock.json
-npm install
-npm run build
-```
-
-### Firebase Connection Issues
-- Check environment variables
-- Verify Firebase project is active
-- Check authorized domains in Firebase Console
-
-### Routing Issues (404 on refresh)
-- Already configured in `vercel.json`
-- For other platforms, configure SPA routing
-
-## 📄 License
-
-This project is private and proprietary.
-
-## 👨‍💻 Development
-
-### Code Style
-- Use functional components
-- Follow React best practices
-- Use hooks for state management
-- Keep components modular
-
-### Adding New Features
-1. Create feature branch
-2. Implement changes
-3. Test locally
-4. Create pull request
-5. Deploy preview on Vercel
-
-## 🎉 Acknowledgments
-
-- Create React App for project scaffolding
-- Firebase for backend services
-- Vercel for hosting platform
-- FontAwesome for icons
-
----
-
-**Made with ❤️ for food and grocery delivery**
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.

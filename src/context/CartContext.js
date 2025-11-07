@@ -157,7 +157,7 @@ export function CartProvider({ children }){
       try{ localStorage.setItem(storageKey(null,'food'), JSON.stringify(food)); }catch(e){}
       try{ localStorage.setItem(storageKey(null,'grocery'), JSON.stringify(grocery)); }catch(e){}
     }
-  },[food, grocery, user?.uid, synced, dirtyFood, dirtyGrocery]);
+  },[food, grocery, user?.uid, user?.email, synced, dirtyFood, dirtyGrocery]);
 
   function addItem(item, qty=1, type='food'){
     if(type==='grocery'){

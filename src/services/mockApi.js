@@ -1,6 +1,6 @@
 // mockApi now supports Firestore-backed inventory and orders when available.
 import { db } from '../firebase';
-import { collection, doc, getDoc, getDocs, setDoc, runTransaction, query } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, setDoc, runTransaction } from 'firebase/firestore';
 
 const INVENTORY_KEY = 'feasto_inventory_v1';
 const ORDERS_KEY_PREFIX = 'feasto_orders_';

@@ -32,7 +32,7 @@ export default function Orders(){
       } else setOrders([]);
       setLoading(false);
     })();
-  },[user?.uid]);
+  },[user]);
 
   return (
     <div style={{background:'#f8f9fa', minHeight:'100vh', paddingBottom:'4rem'}}>

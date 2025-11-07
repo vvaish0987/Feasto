@@ -109,7 +109,7 @@ export default function Profile(){
       }catch(e){ console.warn('Profile load error', e); setFetchError(e.message || String(e)); }
       setLoading(false);
     })();
-  },[user?.uid, user?.email]);
+  },[user?.uid, user?.email, indianCities]);
 
   async function save(){
     if(!user?.email) return setMsg('Please login first');

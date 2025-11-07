@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
-import logoIcon from '../assests/icon/icon.png';
 import '../animations.css';
 
 export default function Navbar(){
@@ -31,13 +30,13 @@ export default function Navbar(){
       setTimeout(() => setBounceCart(false), 400);
     }
     setPrevQty(qty);
-  }, [qty]);
+  }, [qty, prevQty]);
 
   useEffect(()=>{
     if(user && !user.name && typeof refreshProfile === 'function'){
       refreshProfile().catch(e=> console.warn('refreshProfile failed', e));
     }
-  }, [user?.uid]);
+  }, [user, refreshProfile]);
 
   const navbarStyle = {
     position: 'sticky',

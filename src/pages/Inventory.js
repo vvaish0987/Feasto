@@ -9,7 +9,7 @@ export default function Inventory(){
   const [foodFeatured, setFoodFeatured] = useState([]);
   const [grocFeatured, setGrocFeatured] = useState([]);
   const [dealGroups, setDealGroups] = useState([]);
-  const [dealCategories, setDealCategories] = useState([]);
+  // Removed unused state
   const [popularRestaurants, setPopularRestaurants] = useState([]);
   const [selected, setSelected] = useState(null);
   const navigate = useNavigate();

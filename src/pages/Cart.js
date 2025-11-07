@@ -26,77 +26,7 @@ export default function CartPage(){
   const items = tab === 'grocery' ? grocery : food;
   const total = tab === 'grocery' ? totalGrocery : totalFood;
 
-  const tabButtonStyle = (isActive) => ({
-    background: isActive 
-      ? 'linear-gradient(135deg, #FFB800 0%, #FF8C00 100%)'
-      : 'rgba(255, 255, 255, 0.9)',
-    color: isActive ? '#0D0D0D' : '#FFB800',
-    border: isActive ? 'none' : '2px solid rgba(255, 184, 0, 0.3)',
-    padding: '0.8rem 2rem',
-    borderRadius: 25,
-    fontWeight: 600,
-    cursor: 'pointer',
-    transition: 'all 0.3s ease',
-    boxShadow: isActive ? '0 4px 15px rgba(255, 184, 0, 0.4)' : 'none',
-    fontFamily: 'Poppins, sans-serif',
-    fontSize: '1rem'
-  });
-
-  const cartItemStyle = {
-    background: 'rgba(255, 255, 255, 0.95)',
-    border: '1px solid rgba(255, 184, 0, 0.2)',
-    borderRadius: 20,
-    padding: '1.5rem',
-    marginBottom: '1rem',
-    boxShadow: '0 4px 16px rgba(255, 184, 0, 0.1)',
-    transition: 'all 0.3s ease',
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-  };
-
-  const summaryCardStyle = {
-    background: 'rgba(255, 255, 255, 0.95)',
-    border: '2px solid var(--primary-color)',
-    borderRadius: 20,
-    padding: '2rem',
-    boxShadow: '0 8px 32px rgba(255, 184, 0, 0.2)',
-    position: 'sticky',
-    top: 120,
-    height: 'fit-content'
-  };
-
-  const quantityInputStyle = {
-    width: 70,
-    padding: '0.5rem',
-    borderRadius: 12,
-    border: '2px solid var(--primary-color)',
-    textAlign: 'center',
-    fontWeight: 600,
-    fontSize: '1rem'
-  };
-
-  const removeButtonStyle = {
-    background: 'transparent',
-    border: '2px solid #EF4444',
-    color: '#EF4444',
-    padding: '0.5rem 1rem',
-    borderRadius: 15,
-    fontWeight: 600,
-    cursor: 'pointer',
-    transition: 'all 0.3s ease',
-    fontSize: '0.9rem'
-  };
-
-  const emptyCartStyle = {
-    background: 'rgba(255, 255, 255, 0.95)',
-    border: '1px solid rgba(255, 184, 0, 0.2)',
-    borderRadius: 20,
-    padding: '3rem',
-    textAlign: 'center',
-    boxShadow: '0 8px 32px rgba(255, 184, 0, 0.1)',
-    color: '#0D0D0D'
-  };
+  // Styles moved to CSS file or applied directly in JSX
 
   return (
     <div style={{background:'#f8f9fa', minHeight:'100vh', paddingBottom:'4rem'}}>

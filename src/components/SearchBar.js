@@ -53,6 +53,7 @@ export default function SearchBar({ initialType, onAdd, onBuyNow, compact=false,
     const q = (query || '').trim();
     if(q.length < 1){ setResults([]); return; }
     let cancelled = false;
+  }, [query, category, restaurant]);
     setLoading(true);
     const id = setTimeout(async ()=>{
       try{
