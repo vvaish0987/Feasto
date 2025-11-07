@@ -34,8 +34,7 @@ export default function Inventory(){
         }
         const groups = Array.from(map.entries()).map(([k,v])=> ({ name: k, hotel: v.hotel, items: v.items }));
         setDealGroups(groups.slice(0,12));
-        const cats = Array.from(new Set(offers.map(o=> o.category).filter(Boolean)));
-        setDealCategories(cats.slice(0,8));
+        // Removed deal categories handling
         const restaurants = Array.from(new Set((allF||[]).map(i=> i.hotel && i.hotel.name).filter(Boolean))).slice(0,12);
         setPopularRestaurants(restaurants);
       }catch(e){ /* ignore fallback */ }
@@ -159,10 +158,7 @@ export default function Inventory(){
     );
   }
 
-  function handleDealCategoryClick(category){
-    // navigate to food page with initial filter to show offers in this category
-    navigate('/food', { state: { initialFilters: { offers: 'with-offers', category } } });
-  }
+  // Removed unused handleDealCategoryClick function
 
   function handleRestaurantClick(name){
     navigate('/food', { state: { initialFilters: { offers: 'with-offers', restaurant: name } } });
