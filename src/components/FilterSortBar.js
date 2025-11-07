@@ -8,7 +8,7 @@ const FilterSortBar = ({
   restaurants = [],
   initialFilters = {}
 }) => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState(initialFilters.searchQuery || '');
   const [sortBy, setSortBy] = useState('name');
   const [sortOrder, setSortOrder] = useState('asc');
   const [filters, setFilters] = useState({
@@ -19,6 +19,20 @@ const FilterSortBar = ({
     offers: initialFilters.offers || 'all' // all, with-offers, without-offers
   });
   const [showFilters, setShowFilters] = useState(false);
+
+  // Update filters when initialFilters change
+  useEffect(() => {
+    setFilters({
+      vegType: initialFilters.vegType || 'all',
+      priceRange: initialFilters.priceRange || 'all',
+      category: initialFilters.category || 'all',
+      restaurant: initialFilters.restaurant || 'all',
+      offers: initialFilters.offers || 'all'
+    });
+    if (initialFilters.searchQuery) {
+      setSearchTerm(initialFilters.searchQuery);
+    }
+  }, [initialFilters.vegType, initialFilters.priceRange, initialFilters.category, initialFilters.restaurant, initialFilters.offers, initialFilters.searchQuery]);
 
   // Apply search, sort, and filters
   useEffect(() => {

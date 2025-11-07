@@ -114,10 +114,35 @@ export default function Navbar(){
   return (
     <header style={navbarStyle}>
       <div style={containerStyle}>
-        {/* Left: Logo text and Nav Links */}
+        {/* Left: Logo and Nav Links */}
         <div style={{display:'flex', alignItems:'center', gap:32}}>
-          <Link to="/" style={{textDecoration:'none'}}>
-            <span style={{fontSize:'1.6rem', fontWeight:800, color: '#0D0D0D', fontFamily:'Montserrat, sans-serif', letterSpacing:'1px'}}>FEASTO</span>
+          <Link to="/" style={{textDecoration:'none', display: 'flex', alignItems: 'center', gap: '0.8rem'}}>
+            <div style={{
+              fontSize: '1.8rem',
+              background: 'linear-gradient(135deg, #FFB800 0%, #FF8C00 100%)',
+              padding: '0.4rem',
+              borderRadius: 10,
+              width: 42,
+              height: 42,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: '0 4px 15px rgba(255, 184, 0, 0.3)'
+            }}>
+              <i className="fa-solid fa-utensils" style={{color: '#0D0D0D'}}></i>
+            </div>
+            <h3 style={{
+              fontSize: '1.6rem',
+              fontWeight: 900,
+              background: 'linear-gradient(135deg, #FFB800 0%, #FF8C00 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+              fontFamily: 'Montserrat, sans-serif',
+              margin: 0
+            }}>
+              FEASTO
+            </h3>
           </Link>
           <nav style={{display:'flex', alignItems:'center', gap:24}}>
             <Link to="/food" className="hover-underline" style={{...navLinkStyle, fontWeight:600}}>

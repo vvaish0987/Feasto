@@ -35,6 +35,13 @@ export default function Food(){
       // Auto-show items if filters are passed from home page
       if(initFilters && Object.keys(initFilters).length > 0){
         setShowItems(true);
+        // Apply the filters from home page
+        if(initFilters.category && initFilters.category !== 'all') {
+          setSelectedCategory(initFilters.category);
+        }
+        if(initFilters.restaurant && initFilters.restaurant !== 'all') {
+          setSelectedRestaurant(initFilters.restaurant);
+        }
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -70,6 +77,7 @@ export default function Food(){
   }
 
   const categoryImages = {
+    'All': 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&auto=format&fit=crop',
     'Biryani': 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400&auto=format&fit=crop',
     'Pizza': 'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&auto=format&fit=crop',
     'Burger': 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&auto=format&fit=crop',
@@ -77,7 +85,12 @@ export default function Food(){
     'South Indian': 'https://images.unsplash.com/photo-1630383249896-424e482df921?w=400&auto=format&fit=crop',
     'North Indian': 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=400&auto=format&fit=crop',
     'Desserts': 'https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400&auto=format&fit=crop',
-    'Beverages': 'https://images.unsplash.com/photo-1437418747212-8d9709afab22?w=400&auto=format&fit=crop'
+    'Beverages': 'https://images.unsplash.com/photo-1437418747212-8d9709afab22?w=400&auto=format&fit=crop',
+    'Street Food': 'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400&auto=format&fit=crop',
+    'Noodles': 'https://images.unsplash.com/photo-1612929633738-8fe44f7ec841?w=400&auto=format&fit=crop',
+    'Seafood': 'https://images.unsplash.com/photo-1615141982883-c7ad0e69fd62?w=400&auto=format&fit=crop',
+    'Breakfast': 'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=400&auto=format&fit=crop',
+    'Middle Eastern': 'https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=400&auto=format&fit=crop'
   };
 
   const restaurantImages = [
@@ -296,7 +309,7 @@ export default function Food(){
                   gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
                   gap: 20
                 }}>
-                  {categories.map((cat, idx) => (
+                  {categories.slice(0, 8).map((cat, idx) => (
                     <div
                       key={cat}
                       onClick={() => handleCategoryClick(cat)}

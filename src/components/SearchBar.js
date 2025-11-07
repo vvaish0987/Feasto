@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import catalog from '../services/catalogService';
 import ItemCard from './ItemCard';
 
-export default function SearchBar({ initialType, onAdd, onBuyNow, compact=false }){
+export default function SearchBar({ initialType, onAdd, onBuyNow, compact=false, redirectOnSearch=false }){
   const [type, setType] = useState(initialType || 'all'); // 'all' | 'food' | 'grocery'
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('All');
@@ -11,6 +12,7 @@ export default function SearchBar({ initialType, onAdd, onBuyNow, compact=false 
   const [restaurants, setRestaurants] = useState(['All']);
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(()=>{
     let mounted = true;
@@ -66,12 +68,27 @@ export default function SearchBar({ initialType, onAdd, onBuyNow, compact=false 
           const matchesRestaurant = (restaurant === 'All') || (i.hotel && i.hotel.name === restaurant) || (type !== 'food');
           return matchesQuery && matchesRestaurant;
         });
+        
+        // Redirect if in redirect mode and results found
+        if (redirectOnSearch && filtered.length > 0 && !cancelled) {
+          const targetPage = type === 'grocery' ? '/grocery' : '/food';
+          const initialFilters = {
+            searchQuery: q
+          };
+          if (category !== 'All') initialFilters.category = category;
+          if (restaurant !== 'All') initialFilters.restaurant = restaurant;
+          
+          navigate(targetPage, { state: { initialFilters } });
+          setLoading(false);
+          return;
+        }
+        
         if(!cancelled) setResults(filtered);
       }catch(err){ if(!cancelled) setResults([]); }
       finally{ if(!cancelled) setLoading(false); }
     }, 300);
     return ()=>{ cancelled=true; clearTimeout(id); };
-  },[query, type, category]);
+  },[query, type, category, restaurant, redirectOnSearch, navigate]);
 
   const showCategory = useMemo(()=> type==='food' || type==='grocery', [type]);
 
@@ -180,43 +197,47 @@ export default function SearchBar({ initialType, onAdd, onBuyNow, compact=false 
       </div>
 
       <div style={{marginTop: 16}}>
-        {loading && (
-          <div style={{
-            color: 'var(--dark-gray)',
-            fontSize: '0.95rem',
-            opacity: 0.7,
-            fontFamily: 'var(--font-primary)'
-          }}>
-            Searching...
-          </div>
-        )}
-        {!loading && query && results.length===0 && (
-          <div style={{
-            color: 'var(--dark-gray)',
-            fontSize: '0.95rem',
-            opacity: 0.7,
-            fontFamily: 'var(--font-primary)'
-          }}>
-            No results found
-          </div>
-        )}
-        {!loading && results.length>0 && (
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-            gap: 16,
-            marginTop: 8
-          }}>
-            {results.map(r=> (
-              <ItemCard 
-                key={`${r.id}_${r.source}`} 
-                item={r} 
-                onAdd={(it)=> onAdd && onAdd(it)} 
-                onBuyNow={(it)=> onBuyNow && onBuyNow(it)} 
-                type={r.source} 
-              />
-            ))}
-          </div>
+        {!redirectOnSearch && (
+          <>
+            {loading && (
+              <div style={{
+                color: 'var(--dark-gray)',
+                fontSize: '0.95rem',
+                opacity: 0.7,
+                fontFamily: 'var(--font-primary)'
+              }}>
+                Searching...
+              </div>
+            )}
+            {!loading && query && results.length===0 && (
+              <div style={{
+                color: 'var(--dark-gray)',
+                fontSize: '0.95rem',
+                opacity: 0.7,
+                fontFamily: 'var(--font-primary)'
+              }}>
+                No results found
+              </div>
+            )}
+            {!loading && results.length>0 && (
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+                gap: 16,
+                marginTop: 8
+              }}>
+                {results.map(r=> (
+                  <ItemCard 
+                    key={`${r.id}_${r.source}`} 
+                    item={r} 
+                    onAdd={(it)=> onAdd && onAdd(it)} 
+                    onBuyNow={(it)=> onBuyNow && onBuyNow(it)} 
+                    type={r.source} 
+                  />
+                ))}
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

@@ -30,6 +30,10 @@ export default function Grocery(){
       // Auto-show items if filters are passed from home page
       if(initFilters && Object.keys(initFilters).length > 0){
         setShowItems(true);
+        // Apply the filters from home page
+        if(initFilters.category && initFilters.category !== 'all') {
+          setSelectedCategory(initFilters.category);
+        }
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -270,7 +274,67 @@ export default function Grocery(){
               gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
               gap: 20
             }}>
-              {categories.map((cat, idx) => (
+              {/* Explore All option */}
+              <div
+                onClick={handleBrowseAll}
+                style={{
+                  cursor: 'pointer',
+                  borderRadius: 16,
+                  overflow: 'hidden',
+                  background: 'white',
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+                  transition: 'all 0.3s ease',
+                  border: '1px solid rgba(0,0,0,0.06)'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-8px)';
+                  e.currentTarget.style.boxShadow = '0 12px 30px rgba(0,0,0,0.15)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 4px 20px rgba(0,0,0,0.08)';
+                }}
+              >
+                <div style={{
+                  height: 180,
+                  backgroundImage: 'url(https://images.unsplash.com/photo-1542838132-92c53300491e?w=400&auto=format&fit=crop)',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  position: 'relative'
+                }}>
+                  <div style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    padding: '1.5rem',
+                    background: 'linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.85) 100%)'
+                  }}>
+                    <div style={{
+                      color: 'white',
+                      fontSize: '1.3rem',
+                      fontWeight: 800,
+                      fontFamily: 'Montserrat, sans-serif'
+                    }}>
+                      Explore All
+                    </div>
+                  </div>
+                </div>
+                <div style={{
+                  padding: '1rem',
+                  background: 'linear-gradient(135deg, #FFB800 0%, #FF8C00 100%)',
+                  color: '#0D0D0D',
+                  textAlign: 'center',
+                  fontWeight: 700
+                }}>
+                  View All Items
+                </div>
+              </div>
+              
+              {categories.filter(cat => {
+                const allowedCategories = ['Fruits', 'Vegetables', 'Beverages', 'Household', 'Dairy', 'Snacks', 'Bakery'];
+                return allowedCategories.includes(cat);
+              }).map((cat, idx) => (
                 <div
                   key={cat}
                   onClick={() => handleCategoryClick(cat)}

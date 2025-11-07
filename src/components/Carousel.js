@@ -138,7 +138,7 @@ export default function Carousel({ onAdd, onBuyNow }) {
             textShadow: '0 6px 30px rgba(0,0,0,0.5)'
           }}>Your feast just a click away</h1>
         </div>
-        <SearchBar compact={true} onAdd={onAdd} onBuyNow={onBuyNow} />
+        <SearchBar compact={true} redirectOnSearch={true} onAdd={onAdd} onBuyNow={onBuyNow} />
       </div>
       <div style={{...indicatorContainerStyle, bottom: '1rem'}}>
         {carouselImages.map((_, index) => (
