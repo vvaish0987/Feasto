@@ -1,4 +1,6 @@
 # FEASTO - Modern Food & Grocery Ordering Platform
+VERCEL LINK - https://feasto-git-main-vaishnavi-s-projects-b6843521.vercel.app?_vercel_share=tcEwBAN53BcQtZ1qZBcjj1Nid7kZWuOW
+Visit the link to explore the website
 
 [![React](https://img.shields.io/badge/React-18.x-blue)](https://reactjs.org/)
 [![Firebase](https://img.shields.io/badge/Firebase-10.x-orange)](https://firebase.google.com/)
