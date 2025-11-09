@@ -8,8 +8,6 @@ Visit the link to explore the website
 
 FEASTO is a modern, full-featured food and grocery ordering platform that offers a seamless shopping experience with real-time inventory management and order processing.
 
-## 🚀 Quick Start
-
 ### Prerequisites
 
 - Node.js (v14.x or higher)
@@ -17,7 +15,7 @@ FEASTO is a modern, full-featured food and grocery ordering platform that offers
 - Firebase account
 - Git
 
-### Installation
+Installation
 
 1. Clone the repository:
    ```bash
@@ -41,7 +39,7 @@ FEASTO is a modern, full-featured food and grocery ordering platform that offers
    npm start
    ```
 
-### Production Deployment
+Production Deployment
 
 1. Build the application:
    ```bash
@@ -57,7 +55,7 @@ FEASTO is a modern, full-featured food and grocery ordering platform that offers
    vercel
    ```
 
-## 🏗️ Architecture
+Architecture
 
 ### Tech Stack
 - **Frontend:** React.js 
@@ -65,7 +63,7 @@ FEASTO is a modern, full-featured food and grocery ordering platform that offers
 - **State Management:** React Context (Cart and Auth)
 - **UI:** Custom CSS with responsive design
 - **Hosting:** Vercel/Firebase Hosting
-## 🔑 Core Features
+Core Features
 
 ### 1. User Authentication System
 - Secure email/password and Google sign-in options
@@ -103,7 +101,7 @@ FEASTO is a modern, full-featured food and grocery ordering platform that offers
 - Secure payment processing
 - Data access control
 
-## 💾 Database Structure
+Database Structure
 
 ### Firestore Collections
 | Collection | Purpose |
@@ -116,14 +114,14 @@ FEASTO is a modern, full-featured food and grocery ordering platform that offers
 | orders | Order tracking and history |
 | carts | Shopping cart data |
 
-## 🔧 API Services
+API Services
 
 ### Core Services
 - **usersService.js**: User profile and authentication management
 - **catalogService.js**: Product catalog and inventory operations
 - **mockApi.js**: Order processing and inventory updates
 
-## 📱 UI/UX Features
+UI/UX Features
 - Responsive design for all devices
 - Intuitive navigation
 - Real-time feedback
@@ -131,7 +129,7 @@ FEASTO is a modern, full-featured food and grocery ordering platform that offers
 - Error handling with user-friendly messages
 
 
-## 🛠️ Development Guide
+Development Guide
 
 ### Project Structure
 ```
